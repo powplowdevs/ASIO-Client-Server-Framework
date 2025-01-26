@@ -25,10 +25,41 @@ void Server::asyncAcceptConnection(){
             clients_.push_back(socket);
             cout << "Client connected: " << socket->remote_endpoint() << endl;
 
+            // Send client message
+            std::string msg = "hello from server, I am a happy string that is going to NOT be corrupted AT all";
+            std::cout << "msgs to be sent: " << msg << " with size: " << sizeof(&msg) << " or " << msg.size() << std::endl;
+            asyncSendMessage(msg);
+      
             asyncAcceptConnection(); // Keep waiting for connections
         }
         else{
             cerr << "Error while accepting connection: " << ec.message() << endl;
         }
     });
+}
+
+template <typename T>
+void Server::asyncSendMessage(T message){
+    for( auto client : clients_){
+        boost::asio::async_write(*client, boost::asio::buffer(message), 
+        [message](const boost::system::error_code& ec, std::size_t bytesTransferred) {
+            if (!ec) {
+                std::cout << "Packet sent: " << bytesTransferred << " bytes\n";
+                std::cout << "Message: " << message << std::endl;
+                std::cout << "Size: " << sizeof(message) << std::endl;
+            } else {
+                std::cout << "Error sending packet: " << ec.message() << std::endl;
+            }
+        });  
+        // Send EOF
+        char newline = '\n';
+        boost::asio::async_write(*client, boost::asio::buffer(&newline, sizeof(newline)), 
+        [](const boost::system::error_code& ec, std::size_t bytesTransferred) {
+            if (!ec) {
+                std::cout << "\nNewline EOF sent" << std::endl;
+            } else {
+                std::cout << "Error sending packet EOF: " << ec.message() << std::endl;
+            }
+        });
+    }                                                 
 }

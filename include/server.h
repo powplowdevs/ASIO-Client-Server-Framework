@@ -17,6 +17,8 @@ class Server {
 
     private:
         void asyncAcceptConnection();
+        template<typename T>
+        void asyncSendMessage(T message);
 
         boost::asio::io_context& io_context_;
         tcp::acceptor acceptor_;

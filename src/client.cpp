@@ -4,7 +4,7 @@ Client::Client(boost::asio::io_context& io_context, const std::string& server_ip
     : io_context_(io_context), socket_(io_context), resolver_(io_context) {
 
     tcp::resolver::query query(server_ip, std::to_string(server_port));
-    tcp::resolver::iterator endpoint_iterator = resolver_.resolve(query);
+    tcp::resolver::iterator endpoint_iterator = resolver_.resolve(query);       
     
     boost::asio::connect(socket_, endpoint_iterator);
 }
