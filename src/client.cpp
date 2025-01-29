@@ -9,17 +9,19 @@ Client::Client(boost::asio::io_context& io_context, const std::string& server_ip
     boost::asio::connect(socket_, endpoint_iterator);
 }
 
-void Client::start(){
-    receiveMessage();
+template<typename T>
+void Client::start(T userEOF){
+    receiveMessage(userEOF);
 }
 
-void Client::receiveMessage(){
-     boost::asio::async_read_until(socket_, boost::asio::dynamic_buffer(receivedMessage_), "\n",
-    [this](const boost::system::error_code& ec, std::size_t length) {
+template<typename T>
+void Client::receiveMessage(T userEOF){
+     boost::asio::async_read_until(socket_, boost::asio::dynamic_buffer(receivedMessage_), userEOF,
+    [this, userEOF](const boost::system::error_code& ec, std::size_t length) {
         if (!ec) {
             std::cout << "Received: " << receivedMessage_ << std::endl;
             receivedMessage_.clear();
-            receiveMessage();
+            receiveMessage(userEOF);
         } else {
             std::cerr << "Error receiving message: " << ec.message() << std::endl;
         }
