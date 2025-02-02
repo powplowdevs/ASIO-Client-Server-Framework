@@ -15,114 +15,187 @@ private:
     std::vector<std::shared_ptr<tcp::socket>> clients_;
 
     std::mutex mtx_;
-    std::condition_variable clientsLock;
-    int connectedClientsCount = 0;
+    std::condition_variable clientsLock_;
+    std::condition_variable streamLock_;
+
+    std::string debugPath = "./logs/server_log.txt";
+    Logger serverLogger_;    
+
+    int connectedClientsCount_ = 0;
+    int timeout_ = 30;
+    bool isWorking_ = false;
+    bool acceptingConnections_ = true;
+    bool logMessageSending_ = false;
+
 public:
-    Server(boost::asio::io_context& io_context, unsigned short port)
-        : io_context_(io_context), acceptor_(io_context, tcp::endpoint(tcp::v4(), port)), idleWork_(io_context_) {
-        std::cout << "Server started on port " << port << std::endl;
+    Server(boost::asio::io_context& io_context, unsigned short port) : io_context_(io_context), acceptor_(io_context, tcp::endpoint(tcp::v4(), port)), idleWork_(io_context_), serverLogger_(debugPath){
+        // ...
     }
 
-    void start() {
-        serverThread_ = std::thread([this]() {
+    void start(){
+        serverLogger_.info("Starting server | " + acceptor_.local_endpoint().address().to_string() + ":" + std::to_string(acceptor_.local_endpoint().port()));
+        serverThread_ = std::thread([this](){
             io_context_.run();
         });
         serverThread_.detach();
     }
 
-    void shutdown() {
-        std::cout << "Shutting down the server..." << std::endl;
+    void forceShutdown(){
+        serverLogger_.warning("Force shutting down the server!");
         io_context_.stop();
         acceptor_.close();
+        serverLogger_.info("Server shutdown completed.");
     }
 
-    void asyncAcceptConnection() {
+    void shutdown(){
+        serverLogger_.info("Shutting down the server...");
+        setacceptingConnections_(false);
+        for (auto client : clients_){
+            client->shutdown(tcp::socket::shutdown_both);
+            client->close();
+        }
+
+        if (serverThread_.joinable()){
+            serverThread_.join();
+        }
+
+        io_context_.stop();
+        acceptor_.close();
+
+        serverLogger_.info("Server shutdown completed.");
+    }
+
+    void asyncAcceptConnection(){
+        // If accepting connections
+        if(!acceptingConnections_){
+            serverLogger_.info("Server stopped accepting connections");
+            return;
+        }
         // Make socket for new client
         auto socket = std::make_shared<tcp::socket>(io_context_);
 
         // Accept new client and handle the connection
-        acceptor_.async_accept(*socket, [this, socket](const boost::system::error_code& ec) {
-            if (!ec) {
+        acceptor_.async_accept(*socket, [this, socket](const boost::system::error_code& ec){
+            if (!ec){
                 clients_.push_back(socket);
-                std::cout << "Client connected: " << socket->remote_endpoint() << std::endl;
+                serverLogger_.info("Client connected | " + socket->remote_endpoint().address().to_string() + ":" + std::to_string(socket->remote_endpoint().port()));
 
-                // Nofity clientsLock
-                connectedClientsCount++;
-                clientsLock.notify_one();
+                // Notify clientsLock_
+                connectedClientsCount_++;
+                clientsLock_.notify_one();
 
                 asyncAcceptConnection(); // Keep waiting for connections
             } else {
-                std::cerr << "Error while accepting connection: " << ec.message() << std::endl;
+                serverLogger_.error("Error while accepting connection: " + ec.message());
             }
         });
     }
 
-    template <typename T, typename T2, std::size_t Ndata, std::size_t Neof>
-    void asyncSendMessageToAll(T (&message)[Ndata], T2 (&userEOF)[Neof]) {
-        if (clients_.empty()) {
-            std::cout << "No clients connected, message not sent." << std::endl;
+    template <typename T, std::size_t Ndata>
+    void asyncSendMessageToAll(T (&message)[Ndata]){
+        if (clients_.empty()){
+            serverLogger_.warning("No clients connected, message not sent.");
             return;
-        }
-        std::cout << "attempt to create a new msg\n msg: " << message << " msgN: " << Ndata << "\nEOF: " << userEOF << " Neof: " << Neof <<  std::endl;
-        for (auto client : clients_) {
-            boost::asio::async_write(*client, boost::asio::buffer(message, Ndata),
-                [message](const boost::system::error_code& ec, std::size_t bytesTransferred) {
-                    if (!ec) {
-                        std::cout << "Packet sent: " << bytesTransferred << " bytes\n";
-                    } else {
-                        std::cout << "Error sending packet: " << ec.message() << std::endl;
-                    }
-                });
+        }   
 
-            // Send EOF
-            boost::asio::async_write(*client, boost::asio::buffer(userEOF, Neof),
-                [userEOF](const boost::system::error_code& ec, std::size_t bytesTransferred) {
-                    if (!ec) {
-                        std::cout << "\nEOF sent: '" << userEOF << "'\n";
-                    } else {
-                        std::cout << "Error sending packet EOF: " << ec.message() << std::endl;
+        waitUntill(isWorking_);
+        isWorking_ = true;
+        int runningJobs = clients_.size();
+
+        for (auto client : clients_){
+            uint32_t messageSize = static_cast<uint32_t>(Ndata);
+            messageSize = htonl(messageSize);
+            boost::asio::async_write(*client, boost::asio::buffer(&messageSize, sizeof(messageSize)),
+            [this, client, message, runningJobs](const boost::system::error_code& ec, std::size_t bytesTransferred) mutable {
+                if (!ec){
+                    serverLogger_.debug("Header sent: " + std::to_string(bytesTransferred) + " bytes");
+
+                    boost::asio::async_write(*client, boost::asio::buffer(message, Ndata),
+                        [this, runningJobs](const boost::system::error_code& ec, std::size_t bytesTransferred) mutable {
+                            if (!ec){
+                                serverLogger_.debug("Message sent: " + std::to_string(bytesTransferred) + " bytes");
+                            } else {
+                                serverLogger_.error("Error sending message: " + ec.message());
+                            }
+                            if(--runningJobs <= 0){
+                                isWorking_ = false;
+                                streamLock_.notify_one();
+                            }
+                        });
+                } else {
+                    serverLogger_.error("Error sending header: " + ec.message()); 
+                     if (--runningJobs < 0){
+                        isWorking_ = false;
+                        streamLock_.notify_one();
                     }
-                });
+                }
+            });
         }
     }
 
-    template <typename T, typename T2, std::size_t Ndata, std::size_t Neof>
-    void asyncSendMessage(std::shared_ptr<tcp::socket> client, T (&message)[Ndata], T2 (&userEOF)[Neof]) {
-        if (clients_.empty()) {
-            std::cout << "No clients connected, message not sent." << std::endl;
+    template <typename T, std::size_t Ndata>
+    void asyncSendMessage(std::shared_ptr<tcp::socket> client, T (&message)[Ndata]){
+        if (clients_.empty()){
+            serverLogger_.warning("No clients connected, message not sent.");
             return;
         }
 
-        std::cout << "attempt to create a new msg\n msg: " << message << " msgN: " << Ndata << "\nEOF: " << userEOF << " Neof: " << Neof <<  std::endl;
-        boost::asio::async_write(*client, boost::asio::buffer(message, Ndata),
-            [message](const boost::system::error_code& ec, std::size_t bytesTransferred) {
-                if (!ec) {
-                    std::cout << "Packet sent: " << bytesTransferred << " bytes\n";
-                } else {
-                    std::cout << "Error sending packet: " << ec.message() << std::endl;
-                }
-            });
+        waitUntill(isWorking_);
+        isWorking_ = true;
+        int runningJobs = clients_.size();
 
-        // Send EOF
-        boost::asio::async_write(*client, boost::asio::buffer(userEOF, Neof),
-            [userEOF](const boost::system::error_code& ec, std::size_t bytesTransferred) {
-                if (!ec) {
-                    std::cout << "\nEOF sent: '" << userEOF << "'\n";
-                } else {
-                    std::cout << "Error sending packet EOF: " << ec.message() << std::endl;
+        uint32_t messageSize = static_cast<uint32_t>(Ndata); // 4 byte header
+        messageSize = htonl(messageSize);
+
+        boost::asio::async_write(*client, boost::asio::buffer(&messageSize, sizeof(messageSize)),
+        [this, client, message, runningJobs](const boost::system::error_code& ec, std::size_t bytesTransferred) mutable {
+            if (!ec){
+                serverLogger_.debug("Header sent: " + std::to_string(bytesTransferred) + " bytes");
+
+                boost::asio::async_write(*client, boost::asio::buffer(message, Ndata),
+                    [this, runningJobs](const boost::system::error_code& ec, std::size_t bytesTransferred) mutable {
+                        if (!ec){
+                            serverLogger_.debug("Message sent: " + std::to_string(bytesTransferred) + " bytes");
+                        } 
+                        else{
+                            serverLogger_.error("Error sending message: " + ec.message());
+                        }
+                        if (--runningJobs < 0){
+                            isWorking_ = false;
+                            streamLock_.notify_one();
+                        }
+                    });
+            } else {
+                serverLogger_.error("Error sending header: " + ec.message());
+                if (--runningJobs < 0){
+                    isWorking_ = false;
+                    streamLock_.notify_one();
                 }
-            });
+            }
+        });
+        
+
     }
 
-    void waitForConnections(int x = 1) {
+    void waitForConnections(int x = 1){
         std::unique_lock<std::mutex> lock(mtx_);
         // Wait until enough clients are connected
-        clientsLock.wait(lock, [this, x]() { 
-            std::cout << "Waiting for " << x << " connections. Current: " << connectedClientsCount << std::endl;
-            return connectedClientsCount >= x; 
+        clientsLock_.wait(lock, [this, x](){ 
+            serverLogger_.info("Waiting for " + std::to_string(x) + " connections. Current: " + std::to_string(connectedClientsCount_));
+            return connectedClientsCount_ >= x; 
         });
+        lock.unlock();
     }
 
+    void waitUntill(bool &condition, bool req=false){
+        std::unique_lock<std::mutex> lock(mtx_);
+        streamLock_.wait(lock, [this, &condition, &req](){ 
+            return condition==req; 
+        });
+        lock.unlock();
+    }
+
+    // Getters
     std::vector<std::shared_ptr<tcp::socket>> getClients(){
         return clients_;
     }
@@ -130,6 +203,20 @@ public:
     std::shared_ptr<tcp::socket> getClient(int index){
         return clients_[index];
     }
+
+    int getClientsAmount(){
+        return clients_.size();
+    }
+
+    // Setters
+    void setacceptingConnections_(bool value){
+        acceptingConnections_ = value;
+    }
+
+    void setlogMessageSending_(bool value){
+        logMessageSending_ = value;
+    }
+
 };
 
 #endif

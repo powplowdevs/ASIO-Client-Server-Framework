@@ -10,4 +10,6 @@
 #include <iostream>
 #include <thread>
 
+#include "log.h"
+
 #endif

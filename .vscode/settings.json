@@ -1,7 +1,5 @@
 {
     "files.associations": {
-        "memory": "cpp",
-        "iostream": "cpp",
         "chrono": "cpp",
         "cctype": "cpp",
         "clocale": "cpp",
@@ -36,6 +34,7 @@
         "algorithm": "cpp",
         "functional": "cpp",
         "iterator": "cpp",
+        "memory": "cpp",
         "memory_resource": "cpp",
         "numeric": "cpp",
         "optional": "cpp",
@@ -52,6 +51,7 @@
         "initializer_list": "cpp",
         "iomanip": "cpp",
         "iosfwd": "cpp",
+        "iostream": "cpp",
         "istream": "cpp",
         "limits": "cpp",
         "mutex": "cpp",
@@ -66,7 +66,6 @@
         "cinttypes": "cpp",
         "typeindex": "cpp",
         "typeinfo": "cpp",
-        "variant": "cpp",
-        "*.ipp": "cpp"
+        "variant": "cpp"
     }
 }

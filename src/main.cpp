@@ -3,6 +3,7 @@
 #include <string>
 #include <thread>
 #include <atomic>
+#include <chrono>
 
 
 #include "server.h"
@@ -33,11 +34,16 @@ int main() {
         // Start accepting connections
         server.asyncAcceptConnection();
 
+        // Enable msg logging
+        server.setlogMessageSending_(true);
+
         // Wait for client
         server.waitForConnections(1);
-
+        
         // Send msg to client
-        server.asyncSendMessageToAll("EEEE WOAH WOAH WAOH!", "\n");
+        server.asyncSendMessageToAll("Hello from the server this is msg 1/3");
+        server.asyncSendMessageToAll("Hello from the server 2/3");
+        server.asyncSendMessageToAll("Hello 3/3");
 
         io_context.run();
 
@@ -52,7 +58,7 @@ int main() {
 
         client.start();
         client.connect();
-        client.receiveMessage("\n");
+        client.asyncReceiveMessage();
 
         io_context.run();
     }
