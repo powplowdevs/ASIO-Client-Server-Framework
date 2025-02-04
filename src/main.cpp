@@ -5,7 +5,6 @@
 #include <atomic>
 #include <chrono>
 
-
 #include "server.h"
 #include "client.h"
 
@@ -35,7 +34,7 @@ int main() {
         server.asyncAcceptConnection();
 
         // Enable msg logging
-        server.setlogMessageSending_(true);
+        server.setlogDebug_(true);
 
         // Wait for client
         server.waitForConnections(1);
@@ -44,6 +43,9 @@ int main() {
         server.asyncSendMessageToAll("Hello from the server this is msg 1/3");
         server.asyncSendMessageToAll("Hello from the server 2/3");
         server.asyncSendMessageToAll("Hello 3/3");
+
+        // Recv msg from client
+        server.asyncReceiveMessage();
 
         io_context.run();
 
@@ -57,8 +59,10 @@ int main() {
         Client client(io_context, serverIp, port);
 
         client.start();
+        client.setlogDebug_(true);
         client.connect();
         client.asyncReceiveMessage();
+        client.asyncSendMessage("Hello from client!");
 
         io_context.run();
     }
