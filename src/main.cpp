@@ -47,6 +47,9 @@ int main() {
         // Recv msg from client
         server.asyncReceiveMessage();
 
+        // Shut off
+        server.shutdown(true);
+
         io_context.run();
 
     }
@@ -63,6 +66,8 @@ int main() {
         client.connect();
         client.asyncReceiveMessage();
         client.asyncSendMessage("Hello from client!");
+
+        client.shutdown(true);
 
         io_context.run();
     }

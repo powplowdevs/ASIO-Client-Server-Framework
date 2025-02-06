@@ -413,3 +413,280 @@
 [2025-02-04 16:14:52] [DEBUG] Message sent: 10 bytes
 [2025-02-04 16:14:52] [INFO] Received header (19 bytes) from client 127.0.0.1:43396
 [2025-02-04 16:14:52] [INFO] Received from 127.0.0.1:43396 -> Hello from client! 
+[2025-02-04 19:01:08] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-04 19:01:08] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-04 19:01:09] [INFO] Client connected | 127.0.0.1:57552
+[2025-02-04 19:01:09] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-04 19:01:09] [DEBUG] Header sent: 4 bytes
+[2025-02-04 19:01:09] [DEBUG] Message sent: 38 bytes
+[2025-02-04 19:01:57] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-04 19:01:57] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-04 19:01:58] [INFO] Client connected | 127.0.0.1:41036
+[2025-02-04 19:01:58] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-04 19:01:58] [DEBUG] Header sent: 4 bytes
+[2025-02-04 19:01:58] [DEBUG] Message sent: 38 bytes
+[2025-02-04 19:01:58] [DEBUG] Header sent: 4 bytes
+[2025-02-04 19:01:58] [DEBUG] Message sent: 26 bytes
+[2025-02-04 19:01:58] [DEBUG] Header sent: 4 bytes
+[2025-02-04 19:01:58] [DEBUG] Message sent: 10 bytes
+[2025-02-04 19:01:58] [INFO] Received header (19 bytes) from client 127.0.0.1:41036
+[2025-02-04 19:01:58] [INFO] Received from 127.0.0.1:41036 -> Hello from client! 
+[2025-02-04 19:03:08] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-04 19:03:08] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-04 19:03:13] [INFO] Client connected | 127.0.0.1:35588
+[2025-02-04 19:03:13] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-04 19:03:13] [DEBUG] Header sent: 4 bytes
+[2025-02-04 19:03:13] [DEBUG] Message sent: 38 bytes
+[2025-02-04 19:03:19] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-04 19:03:19] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-04 19:03:23] [INFO] Client connected | 127.0.0.1:60268
+[2025-02-04 19:03:23] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-04 19:03:23] [DEBUG] Header sent: 4 bytes
+[2025-02-04 19:03:23] [DEBUG] Message sent: 38 bytes
+[2025-02-04 19:03:33] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-04 19:03:33] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-04 19:03:37] [INFO] Client connected | 127.0.0.1:56854
+[2025-02-04 19:03:37] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-04 19:03:37] [DEBUG] Header sent: 4 bytes
+[2025-02-04 19:03:37] [DEBUG] Message sent: 38 bytes
+[2025-02-04 19:03:44] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-04 19:03:44] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-04 19:03:46] [INFO] Client connected | 127.0.0.1:47338
+[2025-02-04 19:03:46] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-04 19:03:46] [DEBUG] Header sent: 4 bytes
+[2025-02-04 19:03:46] [DEBUG] Message sent: 38 bytes
+[2025-02-04 19:03:46] [DEBUG] Header sent: 4 bytes
+[2025-02-04 19:03:46] [DEBUG] Message sent: 26 bytes
+[2025-02-04 19:03:46] [DEBUG] Header sent: 4 bytes
+[2025-02-04 19:03:46] [INFO] Received header (19 bytes) from client 127.0.0.1:47338
+[2025-02-04 19:03:46] [DEBUG] Message sent: 10 bytes
+[2025-02-04 19:03:46] [INFO] Received from 127.0.0.1:47338 -> Hello from client! 
+[2025-02-04 19:06:12] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-04 19:06:12] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-04 19:06:14] [INFO] Client connected | 127.0.0.1:44838
+[2025-02-04 19:06:14] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-04 19:06:14] [DEBUG] Header sent: 4 bytes
+[2025-02-04 19:06:14] [DEBUG] Message sent: 38 bytes
+[2025-02-04 19:06:24] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-04 19:06:24] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-04 19:06:25] [INFO] Client connected | 127.0.0.1:41884
+[2025-02-04 19:06:25] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-04 19:06:25] [DEBUG] Header sent: 4 bytes
+[2025-02-04 19:06:25] [DEBUG] Message sent: 38 bytes
+[2025-02-04 19:07:19] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-04 19:07:19] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-04 19:07:20] [INFO] Client connected | 127.0.0.1:51186
+[2025-02-04 19:07:20] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-04 19:07:20] [DEBUG] Header sent: 4 bytes
+[2025-02-04 19:07:20] [DEBUG] Message sent: 38 bytes
+[2025-02-04 19:07:20] [DEBUG] Header sent: 4 bytes
+[2025-02-04 19:07:20] [DEBUG] Message sent: 26 bytes
+[2025-02-04 19:07:20] [DEBUG] Header sent: 4 bytes
+[2025-02-04 19:07:20] [DEBUG] Message sent: 10 bytes
+[2025-02-04 19:07:20] [INFO] Received header (19 bytes) from client 127.0.0.1:51186
+[2025-02-04 19:07:20] [INFO] Received from 127.0.0.1:51186 -> Hello from client! 
+[2025-02-04 19:07:48] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-04 19:07:48] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-04 19:07:50] [INFO] Client connected | 127.0.0.1:51128
+[2025-02-04 19:07:50] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-04 19:07:50] [DEBUG] Header sent: 4 bytes
+[2025-02-04 19:07:50] [DEBUG] Message sent: 38 bytes
+[2025-02-04 19:07:50] [DEBUG] Header sent: 4 bytes
+[2025-02-04 19:07:50] [DEBUG] Message sent: 26 bytes
+[2025-02-04 19:07:50] [DEBUG] Header sent: 4 bytes
+[2025-02-04 19:07:50] [DEBUG] Message sent: 10 bytes
+[2025-02-04 19:07:50] [INFO] Received header (19 bytes) from client 127.0.0.1:51128
+[2025-02-04 19:07:50] [INFO] Received from 127.0.0.1:51128 -> Hello from client! 
+[2025-02-04 19:07:52] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-04 19:07:52] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-04 19:07:55] [INFO] Client connected | 127.0.0.1:51140
+[2025-02-04 19:07:55] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-04 19:07:55] [DEBUG] Header sent: 4 bytes
+[2025-02-04 19:07:55] [DEBUG] Message sent: 38 bytes
+[2025-02-05 01:34:59] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-05 01:34:59] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-05 01:35:02] [INFO] Client connected | 127.0.0.1:48482
+[2025-02-05 01:35:02] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-05 01:35:02] [DEBUG] Header sent: 4 bytes
+[2025-02-05 01:35:02] [DEBUG] Message sent: 38 bytes
+[2025-02-05 01:37:37] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-05 01:37:37] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-05 01:37:40] [INFO] Client connected | 127.0.0.1:33716
+[2025-02-05 01:37:40] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-05 01:37:40] [DEBUG] Header sent: 4 bytes
+[2025-02-05 01:37:40] [DEBUG] Message sent: 38 bytes
+[2025-02-05 01:40:56] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-05 01:40:56] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-05 01:40:58] [INFO] Client connected | 127.0.0.1:46770
+[2025-02-05 01:40:58] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-05 01:40:58] [DEBUG] Header sent: 4 bytes
+[2025-02-05 01:40:58] [DEBUG] Message sent: 38 bytes
+[2025-02-05 01:44:13] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-05 01:44:13] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-05 01:44:16] [INFO] Client connected | 127.0.0.1:40194
+[2025-02-05 01:44:16] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-05 01:44:16] [DEBUG] Header sent: 4 bytes
+[2025-02-05 01:44:16] [DEBUG] Message sent: 38 bytes
+[2025-02-05 01:45:24] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-05 01:45:24] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-05 01:45:25] [INFO] Client connected | 127.0.0.1:46906
+[2025-02-05 01:45:25] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-05 01:45:25] [DEBUG] Header sent: 4 bytes
+[2025-02-05 01:45:25] [DEBUG] Message sent: 38 bytes
+[2025-02-05 01:47:33] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-05 01:47:33] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-05 01:47:35] [INFO] Client connected | 127.0.0.1:53066
+[2025-02-05 01:47:35] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-05 01:47:35] [DEBUG] Header sent: 4 bytes
+[2025-02-05 01:47:35] [DEBUG] Message sent: 38 bytes
+[2025-02-05 01:48:34] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-05 01:48:34] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-05 01:48:35] [INFO] Client connected | 127.0.0.1:53712
+[2025-02-05 01:48:35] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-05 01:48:35] [DEBUG] Header sent: 4 bytes
+[2025-02-05 01:48:35] [DEBUG] Message sent: 38 bytes
+[2025-02-05 01:49:02] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-05 01:49:02] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-05 01:49:03] [INFO] Client connected | 127.0.0.1:39158
+[2025-02-05 01:49:03] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-05 01:49:03] [DEBUG] Header sent: 4 bytes
+[2025-02-05 01:49:03] [DEBUG] Message sent: 38 bytes
+[2025-02-05 01:50:45] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-05 01:50:45] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-05 01:50:46] [INFO] Client connected | 127.0.0.1:40832
+[2025-02-05 01:50:46] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-05 01:50:46] [DEBUG] Header sent: 4 bytes
+[2025-02-05 01:50:46] [DEBUG] Message sent: 38 bytes
+[2025-02-05 01:52:46] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-05 01:52:46] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-05 01:52:48] [INFO] Client connected | 127.0.0.1:33472
+[2025-02-05 01:52:48] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-05 01:52:48] [INFO] Received header (19 bytes) from client 127.0.0.1:33472
+[2025-02-05 01:52:48] [INFO] Received from 127.0.0.1:33472 -> Hello from client! 
+[2025-02-06 00:30:42] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-06 00:30:42] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-06 00:30:43] [INFO] Client connected | 127.0.0.1:60218
+[2025-02-06 00:30:43] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-06 00:30:43] [DEBUG] Header sent: 4 bytes
+[2025-02-06 00:30:43] [DEBUG] Message sent: 38 bytes
+[2025-02-06 00:32:48] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-06 00:32:48] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-06 00:32:52] [INFO] Client connected | 127.0.0.1:36646
+[2025-02-06 00:32:52] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-06 00:32:52] [DEBUG] Header sent: 4 bytes
+[2025-02-06 00:32:52] [DEBUG] Message sent: 38 bytes
+[2025-02-06 00:33:31] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-06 00:33:31] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-06 00:33:32] [INFO] Client connected | 127.0.0.1:48494
+[2025-02-06 00:33:32] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-06 00:33:32] [DEBUG] Header sent: 4 bytes
+[2025-02-06 00:33:32] [DEBUG] Message sent: 38 bytes
+[2025-02-06 00:34:58] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-06 00:34:58] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-06 00:34:59] [INFO] Client connected | 127.0.0.1:48420
+[2025-02-06 00:34:59] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-06 00:34:59] [DEBUG] Header sent: 4 bytes
+[2025-02-06 00:34:59] [DEBUG] Message sent: 38 bytes
+[2025-02-06 00:42:28] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-06 00:42:28] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-06 00:42:30] [INFO] Client connected | 127.0.0.1:53618
+[2025-02-06 00:42:30] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-06 00:42:30] [DEBUG] Header sent: 4 bytes
+[2025-02-06 00:42:30] [DEBUG] Header sent: 4 bytes
+[2025-02-06 00:42:30] [DEBUG] Header sent: 4 bytes
+[2025-02-06 00:42:30] [DEBUG] Message sent: 38 bytes
+[2025-02-06 00:42:30] [DEBUG] Message sent: 26 bytes
+[2025-02-06 00:42:30] [DEBUG] Message sent: 10 bytes
+[2025-02-06 00:42:30] [INFO] Received header (19 bytes) from client 127.0.0.1:53618
+[2025-02-06 00:42:30] [INFO] Received from 127.0.0.1:53618 -> Hello from client! 
+[2025-02-06 00:45:56] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-06 00:45:56] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-06 00:46:01] [INFO] Client connected | 127.0.0.1:55148
+[2025-02-06 00:46:01] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-06 00:46:01] [DEBUG] Header sent: 4 bytes
+[2025-02-06 00:46:01] [DEBUG] Header sent: 4 bytes
+[2025-02-06 00:46:01] [DEBUG] Header sent: 4 bytes
+[2025-02-06 00:46:01] [DEBUG] Message sent: 26 bytes
+[2025-02-06 00:46:01] [DEBUG] Message sent: 10 bytes
+[2025-02-06 00:46:01] [DEBUG] Message sent: 38 bytes
+[2025-02-06 00:46:01] [INFO] Received header (19 bytes) from client 127.0.0.1:55148
+[2025-02-06 00:46:01] [INFO] Received from 127.0.0.1:55148 -> Hello from client! 
+[2025-02-06 00:46:59] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-06 00:46:59] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-06 00:47:02] [INFO] Client connected | 127.0.0.1:60154
+[2025-02-06 00:47:02] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-06 00:47:02] [DEBUG] Header sent: 4 bytes
+[2025-02-06 00:47:02] [DEBUG] Header sent: 4 bytes
+[2025-02-06 00:47:02] [DEBUG] Header sent: 4 bytes
+[2025-02-06 00:47:02] [DEBUG] Message sent: 38 bytes
+[2025-02-06 00:47:02] [DEBUG] Message sent: 26 bytes
+[2025-02-06 00:47:02] [DEBUG] Message sent: 10 bytes
+[2025-02-06 00:47:02] [INFO] Received header (19 bytes) from client 127.0.0.1:60154
+[2025-02-06 00:47:02] [INFO] Received from 127.0.0.1:60154 -> Hello from client! 
+[2025-02-06 16:06:10] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-06 16:06:10] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-06 16:06:12] [INFO] Client connected | 127.0.0.1:42638
+[2025-02-06 16:06:12] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-06 16:06:12] [DEBUG] Header sent: 4 bytes
+[2025-02-06 16:06:12] [DEBUG] Header sent: 4 bytes
+[2025-02-06 16:06:12] [DEBUG] Message sent: 38 bytes
+[2025-02-06 16:06:12] [DEBUG] Message sent: 26 bytes
+[2025-02-06 16:06:12] [INFO] Received header (19 bytes) from client 127.0.0.1:42638
+[2025-02-06 16:06:12] [INFO] Received from 127.0.0.1:42638 -> Hello from client! 
+[2025-02-06 16:06:12] [DEBUG] Header sent: 4 bytes
+[2025-02-06 16:06:12] [DEBUG] Message sent: 10 bytes
+[2025-02-06 16:18:04] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-06 16:18:04] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-06 16:18:06] [INFO] Client connected | 127.0.0.1:37786
+[2025-02-06 16:18:06] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-06 16:18:06] [DEBUG] Header sent: 4 bytes
+[2025-02-06 16:18:06] [DEBUG] Message sent: 38 bytes
+[2025-02-06 16:18:06] [DEBUG] Header sent: 4 bytes
+[2025-02-06 16:18:06] [DEBUG] Message sent: 26 bytes
+[2025-02-06 16:18:06] [DEBUG] Header sent: 4 bytes
+[2025-02-06 16:18:06] [DEBUG] Message sent: 10 bytes
+[2025-02-06 16:18:06] [INFO] Received header (19 bytes) from client 127.0.0.1:37786
+[2025-02-06 16:18:06] [INFO] Received from 127.0.0.1:37786 -> Hello from client! 
+[2025-02-06 16:19:59] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-06 16:19:59] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-06 16:20:02] [INFO] Client connected | 127.0.0.1:52156
+[2025-02-06 16:20:02] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-06 16:20:02] [INFO] Shutting down the server...
+[2025-02-06 16:20:02] [DEBUG] Header sent: 4 bytes
+[2025-02-06 16:20:02] [ERROR] Error sending message: Broken pipe
+[2025-02-06 16:20:02] [ERROR] Error sending header: Broken pipe
+[2025-02-06 16:24:31] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-06 16:24:31] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-06 16:24:33] [INFO] Client connected | 127.0.0.1:37750
+[2025-02-06 16:24:33] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-06 16:24:33] [DEBUG] Header sent: 4 bytes
+[2025-02-06 16:24:33] [ERROR] Error sending message: Broken pipe
+[2025-02-06 16:24:33] [ERROR] Error sending header: Broken pipe
+[2025-02-06 16:24:33] [ERROR] Error sending header: Broken pipe
+[2025-02-06 16:24:33] [ERROR] Error receiving message header: End of file
+[2025-02-06 16:25:08] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-06 16:25:08] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-06 16:25:11] [INFO] Client connected | 127.0.0.1:48802
+[2025-02-06 16:25:11] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-06 16:25:11] [DEBUG] Header sent: 4 bytes
+[2025-02-06 16:25:11] [ERROR] Error sending message: Broken pipe
+[2025-02-06 16:25:11] [INFO] Shutting down the server...
+[2025-02-06 16:26:54] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-06 16:26:54] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-06 16:26:55] [INFO] Client connected | 127.0.0.1:35632
+[2025-02-06 16:26:55] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-06 16:26:55] [INFO] Shutting down the server...
+[2025-02-06 16:26:55] [INFO] Server shutdown completed.
+[2025-02-06 16:27:38] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-06 16:27:38] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-06 16:27:40] [INFO] Client connected | 127.0.0.1:36152
+[2025-02-06 16:27:40] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-06 16:27:40] [DEBUG] Header sent: 4 bytes
+[2025-02-06 16:27:40] [DEBUG] Message sent: 38 bytes
+[2025-02-06 16:27:40] [DEBUG] Header sent: 4 bytes
+[2025-02-06 16:27:40] [DEBUG] Message sent: 26 bytes
+[2025-02-06 16:27:40] [DEBUG] Header sent: 4 bytes
+[2025-02-06 16:27:40] [DEBUG] Message sent: 10 bytes
+[2025-02-06 16:27:40] [INFO] Received header (19 bytes) from client 127.0.0.1:36152
+[2025-02-06 16:27:40] [INFO] Received from 127.0.0.1:36152 -> Hello from client! 
+[2025-02-06 16:27:40] [INFO] Shutting down the server...
