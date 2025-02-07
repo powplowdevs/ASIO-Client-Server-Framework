@@ -690,3 +690,42 @@
 [2025-02-06 16:27:40] [INFO] Received header (19 bytes) from client 127.0.0.1:36152
 [2025-02-06 16:27:40] [INFO] Received from 127.0.0.1:36152 -> Hello from client! 
 [2025-02-06 16:27:40] [INFO] Shutting down the server...
+[2025-02-07 01:40:11] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-07 01:40:11] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-07 01:40:15] [INFO] Client connected | 127.0.0.1:40530
+[2025-02-07 01:40:15] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-07 01:40:15] [DEBUG] Header sent: 4 bytes
+[2025-02-07 01:40:15] [DEBUG] Message sent: 38 bytes
+[2025-02-07 01:40:15] [DEBUG] Header sent: 4 bytes
+[2025-02-07 01:40:15] [DEBUG] Message sent: 26 bytes
+[2025-02-07 01:40:15] [DEBUG] Header sent: 4 bytes
+[2025-02-07 01:40:15] [DEBUG] Message sent: 10 bytes
+[2025-02-07 01:40:15] [INFO] Received header (19 bytes) from client 127.0.0.1:40530
+[2025-02-07 01:40:15] [INFO] Received from 127.0.0.1:40530 -> Hello from client! 
+[2025-02-07 01:40:15] [ERROR] Error sending header: Connection reset by peer
+[2025-02-07 01:40:15] [ERROR] Error sending header: Broken pipe
+[2025-02-07 01:40:45] [ERROR] Server timeout
+[2025-02-07 01:40:45] [INFO] Shutting down the server...
+[2025-02-07 01:40:45] [ERROR] Error sending header: Broken pipe
+[2025-02-07 01:41:20] [INFO] Starting server | 0.0.0.0:15555
+[2025-02-07 01:41:20] [INFO] Waiting for 1 connections. Current: 0
+[2025-02-07 01:41:41] [INFO] Client connected | 127.0.0.1:36442
+[2025-02-07 01:41:41] [INFO] Waiting for 1 connections. Current: 1
+[2025-02-07 01:41:41] [DEBUG] Header sent: 4 bytes
+[2025-02-07 01:41:41] [DEBUG] Message sent: 38 bytes
+[2025-02-07 01:41:41] [DEBUG] Header sent: 4 bytes
+[2025-02-07 01:41:41] [DEBUG] Message sent: 26 bytes
+[2025-02-07 01:41:41] [DEBUG] Header sent: 4 bytes
+[2025-02-07 01:41:41] [DEBUG] Message sent: 10 bytes
+[2025-02-07 01:41:41] [INFO] Received header (19 bytes) from client 127.0.0.1:36442
+[2025-02-07 01:41:41] [INFO] Received from 127.0.0.1:36442 -> Hello from client! 
+[2025-02-07 01:41:41] [DEBUG] Header sent: 4 bytes
+[2025-02-07 01:41:41] [DEBUG] Message sent: 8 bytes
+[2025-02-07 01:41:41] [DEBUG] Header sent: 4 bytes
+[2025-02-07 01:41:41] [DEBUG] Message sent: 10 bytes
+[2025-02-07 01:41:41] [DEBUG] Header sent: 4 bytes
+[2025-02-07 01:41:41] [DEBUG] Message sent: 10 bytes
+[2025-02-07 01:41:41] [INFO] Received header (25 bytes) from client 127.0.0.1:36442
+[2025-02-07 01:41:41] [INFO] Received from 127.0.0.1:36442 -> Hello from client again! 
+[2025-02-07 01:41:41] [INFO] Received header (15 bytes) from client 127.0.0.1:36442
+[2025-02-07 01:41:41] [INFO] Received from 127.0.0.1:36442 -> Hello serrver! 

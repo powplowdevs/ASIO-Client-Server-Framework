@@ -40,15 +40,19 @@ int main() {
         server.waitForConnections(1);
         
         // Send msg to client
-        server.asyncSendMessageToAll("Hello from the server this is msg 1/3");
-        server.asyncSendMessageToAll("Hello from the server 2/3");
-        server.asyncSendMessageToAll("Hello 3/3");
+        server.asyncSendMessageToAll("Hello from the server this is msg 1/6");
+        server.asyncSendMessageToAll("Hello from the server 2/6");
+        server.asyncSendMessageToAll("Hello 3/6");
 
         // Recv msg from client
         server.asyncReceiveMessage();
 
+        server.asyncSendMessageToAll("Hi! 4/6");
+        server.asyncSendMessageToAll("Test1 5/6");
+        server.asyncSendMessageToAll("Test2 6/6");
+
         // Shut off
-        server.shutdown(true);
+        //server.shutdown(true);
 
         io_context.run();
 
@@ -66,11 +70,19 @@ int main() {
         client.connect();
         client.asyncReceiveMessage();
         client.asyncSendMessage("Hello from client!");
+        client.asyncSendMessage("Hello from client again!");
+        client.asyncSendMessage("Hello serrver!");
 
-        client.shutdown(true);
+        //client.shutdown(true);
 
         io_context.run();
     }
 
     return 0;
 }
+
+// TODO:
+// Comment all code
+// Add logger var to all scripts that controls how much we log
+// Add some kind of callback to all funcs so that users can get the data recv'ed
+// Add way to stop and start the task queue, use the already made stop_ bool

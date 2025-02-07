@@ -1,6 +1,15 @@
 #ifndef COMMON_INCLUDES_H
 #define COMMON_INCLUDES_H
 
+/**
+ * @file common_includes.h
+ * @brief This file contains includes for dependencies used commonly across the project, 
+ *        as well as the definition of the TaskQueue class, which manages a queue of tasks 
+ *        that are processed asynchronously in a separate thread.
+ * 
+ * @short This class is designed to help with concurrent processing of tasks.
+ */
+
 #include <boost/asio.hpp>
 #include <memory>
 #include <vector>
@@ -15,65 +24,72 @@
 
 #include "log.h"
 
-struct TaskQueue{
+// TaskQueue struct that manages a queue of tasks, processing them asynchronously in a separate thread.
+struct TaskQueue {
 public:
-    bool isWorking_;
-    std::condition_variable isWorkingLock_;
-    
-    TaskQueue() : stop_(false){
-        taskProcessThread_ = std::thread(&TaskQueue::runQueue, this);
+    bool isWorking_; ///< Indicates whether the queue is currently processing a task.
+    std::condition_variable isWorkingLock_; ///< A condition variable to wait for a tasks completion.
+
+    /// @brief Constructs the TaskQueue and starts the task processing thread.
+    TaskQueue() : stop_(false) {
+        taskProcessThread_ = std::thread(&TaskQueue::runQueue, this);  ///< Start processing tasks in a separate thread.
     }
+
+    /// @brief Destructor stops the task queue and joins the processing thread.
     ~TaskQueue() {
         {
             std::lock_guard<std::mutex> lock(qLock_);
-            stop_ = true;
+            stop_ = true;  ///< Set stop flag to true to signal the thread to stop processing.
         }
-        hasTask_.notify_one();
-        taskProcessThread_.join();
+        hasTask_.notify_one();  ///< Notify the thread to check for the stop flag.
+        taskProcessThread_.join();  ///< Wait for the task processing thread to finish.
     }
-    
-    void addTask(std::function<void()> lambda){
+
+    /// @brief Adds a new task to the queue to be processed asynchronously.
+    /// @param lambda A function (task) to be added to the task queue.
+    void addTask(std::function<void()> lambda) {
         {
             std::lock_guard<std::mutex> lock(qLock_);
-            queue_.push(lambda);
-            std::cout << "Adding a task!" << std::endl;
+            queue_.push(lambda);  ///< Add the task (lambda) to the queue.
+            std::cout << "Adding a task!" << std::endl;  ///< Log the task addition.
         }
-        hasTask_.notify_one(); 
+        hasTask_.notify_one();  ///< Notify the worker thread that a task is available.
     }
+
 private:
+    bool stop_;  ///< Flag indicating whether the queue should stop processing.
+    std::queue<std::function<void()>> queue_;  ///< Queue of tasks to be processed.
+    std::mutex qLock_;  ///< Mutex to synchronize access to the queue.
+    std::thread taskProcessThread_;  ///< The thread that processes tasks from the queue.
+    std::condition_variable hasTask_;  ///< Condition variable used to wait for tasks to be available.
 
-    bool stop_;
-    std::queue<std::function<void()>> queue_;
-    std::mutex qLock_;
-    std::thread taskProcessThread_;
-    std::condition_variable hasTask_;
-    
-
+    /// @brief Main function that processes tasks in the queue.
     void runQueue() {
         while (true) {   
-            std::function<void()> task; 
+            std::function<void()> task;
             {
                 std::unique_lock<std::mutex> lock(qLock_);
-                hasTask_.wait(lock, [this](){
+                hasTask_.wait(lock, [this]() {
                     std::cout << "waiting to process task..." << std::endl;
-                    return stop_ || !queue_.empty();
+                    return stop_ || !queue_.empty();  ///< Wait for a task or stop signal.
                 });
-                if(stop_) break;
-            
-                std::cout << "RUNNING TASK" << std::endl;
 
-                task = queue_.front();
-                queue_.pop();
+                if (stop_) break;  ///< Exit the loop if stop flag is set.
+
+                std::cout << "RUNNING TASK" << std::endl;
+                task = queue_.front();  ///< Get the next task from the front of the queue.
+                queue_.pop();  ///< Remove the task from the queue.
             }
 
+            // Lock to modify the `isWorking_` status and wait for task completion.
             std::unique_lock<std::mutex> lock(qLock_);
-            isWorking_ = true;
-            task();
-            isWorkingLock_.wait(lock, [this](){
+            isWorking_ = true;  ///< Set `isWorking_` to true to indicate task is in progress.
+            task();  ///< Execute the task (lambda).
+            isWorkingLock_.wait(lock, [this]() {
                 std::cout << "waiting to finish task..." << std::endl;
-                return isWorking_ == false;
+                return isWorking_ == false;  ///< Wait for the task to finish before continuing.
             });
-            std::cout << "TASK DONE" << std::endl;
+            std::cout << "TASK DONE" << std::endl;  ///< Log task completion.
         }
     }
 };
