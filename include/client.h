@@ -12,7 +12,8 @@ private:
     std::thread clientThread_;
     std::mutex mtx_;
     std::condition_variable recvLock_;
-    TaskQueue queue;
+    TaskQueue queue_;
+    MessageQueue msgQueue_;
 
     std::string debugPath = "./logs/client_log.txt";
     Logger clientLogger_;
@@ -45,8 +46,13 @@ public:
     void forceShutdown(){
         clientLogger_.warning("Force shutting down the client...");
         isConnected_ = false;
+        if (clientThread_.joinable()){
+            clientThread_.join();
+        }
         io_context_.stop();
+        queue_.stopQueue();
         clientLogger_.info("Client shutdown completed.");
+        queue_.isWorking_ = false;
     }
 
     void shutdown(bool runRemainingTasks=false){
@@ -55,21 +61,19 @@ public:
             
             socket_.close();
             isConnected_ = false;
-
-            if (clientThread_.joinable()){
-                clientThread_.join();
-            }
-
             io_context_.stop();
+            queue_.stopQueue();
 
             clientLogger_.info("Client shutdown completed.");
+            queue_.isWorking_ = false;
         };
 
         if(!runRemainingTasks){
             shutOffTask();
         }
         else{
-            queue.addTask([shutOffTask](){shutOffTask();});
+            if(logDebug_) clientLogger_.debug("Client shutoff task has queue_d");
+            queue_.addTask([shutOffTask](){shutOffTask();});
         }
     }
      
@@ -89,15 +93,15 @@ public:
     }
 
     void asyncReceiveMessage(){
-        queue.isWorking_ = false;
-        queue.isWorkingLock_.notify_one();
+        queue_.isWorking_ = false;
+        queue_.isWorkingLock_.notify_one();
 
         if(!isConnected_) {
             clientLogger_.warning("No server connected, message not recived");
             return;
         }
 
-        queue.addTask([this](){
+        queue_.addTask([this](){
             auto headerBuffer = std::make_shared<std::array<char, 4>>(); // 4 byte header
 
             boost::asio::steady_timer timer(io_context_, boost::asio::chrono::seconds(timeout_));
@@ -119,14 +123,15 @@ public:
                     std::memcpy(&messageSize, headerBuffer->data(), sizeof(uint32_t));
                     messageSize = ntohl(messageSize);
                     auto messageBuffer = std::make_shared<std::vector<char>>(messageSize);
-                    if(logDebug_) clientLogger_.info("Received header: " + std::to_string(messageSize));
+                    if(logDebug_) clientLogger_.debug("Received header: " + std::to_string(messageSize));
                     
                     // Read meassge
                     boost::asio::async_read(socket_, boost::asio::buffer(*messageBuffer),
                     [this, messageBuffer, &timer](const boost::system::error_code& ec, std::size_t bytesTransferred){
-                        if (!ec && logDebug_){
+                        if (!ec){
                             std::string receivedMessage(messageBuffer->begin(), messageBuffer->end());
-                            clientLogger_.info("Received: " + receivedMessage);
+                            if(logDebug_) clientLogger_.debug("Received: " + receivedMessage);
+                            msgQueue_.add(receivedMessage);
 
                             timer.cancel();
 
@@ -153,7 +158,7 @@ public:
             return;
         }
 
-        queue.addTask([this, &message](){
+        queue_.addTask([this, &message](){
             uint32_t messageSize = static_cast<uint32_t>(Ndata); // 4 byte header
             messageSize = htonl(messageSize);
             
@@ -167,8 +172,8 @@ public:
                         clientLogger_.error("Timout timer error " + ec.message());
                     }
 
-                    queue.isWorking_ = false;
-                    queue.isWorkingLock_.notify_one();
+                    queue_.isWorking_ = false;
+                    queue_.isWorkingLock_.notify_one();
                 }
             });
 
@@ -181,22 +186,22 @@ public:
                 
                     socket_.async_send(boost::asio::buffer(message, Ndata),
                     [this, &timer](const boost::system::error_code& ec, std::size_t bytesTransferred){
-                        if (!ec && logDebug_) {
-                            clientLogger_.debug("Message sent: " + std::to_string(bytesTransferred) + " bytes");
+                        if (!ec) {
+                            if(logDebug_) clientLogger_.debug("Message sent: " + std::to_string(bytesTransferred) + " bytes");
                         } 
                         else {
                             clientLogger_.error("Error sending message: " + ec.message());
                         }
                         timer.cancel();
-                        queue.isWorking_ = false;
-                        queue.isWorkingLock_.notify_one();
+                        queue_.isWorking_ = false;
+                        queue_.isWorkingLock_.notify_one();
                     });
                 } 
                 else {
                     clientLogger_.error("Error sending header: " + ec.message());
                     timer.cancel();
-                    queue.isWorking_ = false;
-                    queue.isWorkingLock_.notify_one();
+                    queue_.isWorking_ = false;
+                    queue_.isWorkingLock_.notify_one();
                 }
             });
         });
@@ -208,6 +213,15 @@ public:
             return condition==req; 
         });
         lock.unlock();
+    }
+
+    // Getters
+    std::any getLastMessage(){
+        return msgQueue_.getLastMessage();
+    }
+
+    std::any getAllMessages(){
+        return msgQueue_.getAllMessages();
     }
 
     // Setters 

@@ -40,16 +40,13 @@ int main() {
         server.waitForConnections(1);
         
         // Send msg to client
-        server.asyncSendMessageToAll("Hello from the server this is msg 1/6");
-        server.asyncSendMessageToAll("Hello from the server 2/6");
-        server.asyncSendMessageToAll("Hello 3/6");
+        server.asyncSendMessageToAll("Hello from the server!");
 
         // Recv msg from client
         server.asyncReceiveMessage();
+        std::string msg = std::any_cast<std::string>(server.getLastMessage());
+        cout << "MSG FROM SERVER: " << msg << std::endl;
 
-        server.asyncSendMessageToAll("Hi! 4/6");
-        server.asyncSendMessageToAll("Test1 5/6");
-        server.asyncSendMessageToAll("Test2 6/6");
 
         // Shut off
         //server.shutdown(true);
@@ -68,10 +65,12 @@ int main() {
         client.start();
         client.setlogDebug_(true);
         client.connect();
+
+        client.asyncSendMessage("Hello from the client!");
+
         client.asyncReceiveMessage();
-        client.asyncSendMessage("Hello from client!");
-        client.asyncSendMessage("Hello from client again!");
-        client.asyncSendMessage("Hello serrver!");
+        std::string msg = std::any_cast<std::string>(client.getLastMessage());
+        cout << "MSG FROM SERVER: " << msg << std::endl;
 
         //client.shutdown(true);
 
@@ -83,6 +82,4 @@ int main() {
 
 // TODO:
 // Comment all code
-// Add logger var to all scripts that controls how much we log
-// Add some kind of callback to all funcs so that users can get the data recv'ed
-// Add way to stop and start the task queue, use the already made stop_ bool
+// Abstract client and server duped code to shared class

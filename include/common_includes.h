@@ -51,9 +51,13 @@ public:
         {
             std::lock_guard<std::mutex> lock(qLock_);
             queue_.push(lambda);  ///< Add the task (lambda) to the queue.
-            std::cout << "Adding a task!" << std::endl;  ///< Log the task addition.
         }
         hasTask_.notify_one();  ///< Notify the worker thread that a task is available.
+    }
+    
+    /// @brief Stops the task queue and signals the processing thread to terminate.
+    void stopQueue(){
+        stop_ = true;
     }
 
 private:
@@ -69,14 +73,13 @@ private:
             std::function<void()> task;
             {
                 std::unique_lock<std::mutex> lock(qLock_);
+                
+                if (stop_) break;  ///< Exit the loop if stop flag is set.
+
                 hasTask_.wait(lock, [this]() {
-                    std::cout << "waiting to process task..." << std::endl;
                     return stop_ || !queue_.empty();  ///< Wait for a task or stop signal.
                 });
 
-                if (stop_) break;  ///< Exit the loop if stop flag is set.
-
-                std::cout << "RUNNING TASK" << std::endl;
                 task = queue_.front();  ///< Get the next task from the front of the queue.
                 queue_.pop();  ///< Remove the task from the queue.
             }
@@ -86,12 +89,45 @@ private:
             isWorking_ = true;  ///< Set `isWorking_` to true to indicate task is in progress.
             task();  ///< Execute the task (lambda).
             isWorkingLock_.wait(lock, [this]() {
-                std::cout << "waiting to finish task..." << std::endl;
                 return isWorking_ == false;  ///< Wait for the task to finish before continuing.
             });
-            std::cout << "TASK DONE" << std::endl;  ///< Log task completion.
         }
     }
+};
+
+struct MessageQueue {
+public:
+    std::any getLastMessage(){
+        waitUntilFilled();
+        std::any message = queue_[0];
+        queue_.erase(queue_.begin());
+        return message;
+    }
+    
+    std::any getAllMessages(){
+        waitUntilFilled();
+        std::vector<std::any> tQueue = queue_;
+        queue_.clear();
+        return tQueue;
+    }
+
+    void waitUntilFilled(){
+        std::unique_lock<std::mutex> lock(qLock_);
+        hasMessage_.wait(lock, [this]() {
+            return !queue_.empty();  
+        });
+    }
+
+    void add(std::any message){
+        queue_.push_back(message);
+        hasMessage_.notify_one();
+    }
+    
+private:
+    std::vector<std::any> queue_;
+    std::mutex qLock_;
+    std::thread messageProcessThread_; 
+    std::condition_variable hasMessage_;
 };
 
 #endif
