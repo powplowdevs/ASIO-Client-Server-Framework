@@ -37,7 +37,6 @@ public:
         serverLogger_.info("Starting server | " + acceptor_.local_endpoint().address().to_string() + ":" + std::to_string(acceptor_.local_endpoint().port()));
         serverThread_ = std::thread([this](){
             io_context_.run();
-            
             if(logDebug_) serverLogger_.debug("Server IO context has started");
         });
         serverThread_.detach();

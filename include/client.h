@@ -10,6 +10,7 @@ private:
     boost::asio::io_context& io_context_;
     boost::asio::io_context::work idleWork_;
     std::thread clientThread_;
+    
     std::mutex mtx_;
     std::condition_variable recvLock_;
     TaskQueue queue_;
@@ -39,8 +40,10 @@ public:
         clientLogger_.info("Starting client");
         clientThread_ = std::thread([this](){
             io_context_.run();
+            if(logDebug_) clientLogger_.debug("Server IO context has started");
         });  
         clientThread_.detach();
+        if(logDebug_) clientLogger_.debug("Server thread has detached");
     }
 
     void forceShutdown(){
