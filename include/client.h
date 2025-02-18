@@ -5,37 +5,60 @@
 
 using boost::asio::ip::tcp;
 
+/**
+ * @class Client
+ * @brief Represents a client that connects to a server, sends and receives messages asynchronously.
+ * 
+ * This class manages the connection to the server, handles sending and receiving messages 
+ * asynchronously using Boost.Asio, and provides a task queue to handle these operations 
+ * in the background.
+ */
 class Client {
 private:
-    boost::asio::io_context& io_context_;
-    boost::asio::io_context::work idleWork_;
-    std::thread clientThread_;
-    
-    std::mutex mtx_;
-    std::condition_variable recvLock_;
-    TaskQueue queue_;
-    MessageQueue msgQueue_;
+    boost::asio::io_context& io_context_; ///< The IO context used for asynchronous operations.
+    boost::asio::io_context::work idleWork_; ///< Keeps the IO context running.
+    std::thread clientThread_; ///< The thread running the IO context.
 
-    std::string debugPath = "./logs/client_log.txt";
-    Logger clientLogger_;
+    std::mutex mtx_; ///< Mutex for synchronization.
+    std::condition_variable recvLock_; ///< Condition variable for message reception.
+    TaskQueue queue_; ///< TaskQueue used for background task management.
+    MessageQueue msgQueue_; ///< MessageQueue used to store and manage messages.
 
-    tcp::socket socket_;
-    tcp::resolver resolver_;
-    std::string receivedMessage_;
-    tcp::resolver::iterator endpoint_iterator;
+    std::string debugPath = "./logs/client_log.txt"; ///< Path to the log file.
+    Logger clientLogger_; ///< Logger for the client.
 
-    std::string serverIp_;
-    int serverPort_;
+    tcp::socket socket_; ///< Socket used for communication with the server.
+    tcp::resolver resolver_; ///< Resolver to resolve the server IP and port.
+    std::string receivedMessage_; ///< Stores the received message.
+    tcp::resolver::iterator endpoint_iterator; ///< Iterator for resolving the endpoint.
 
-    bool isConnected_ = false;
-    int timeout_ = 30;
-    bool logDebug_ = false;
+    std::string serverIp_; ///< The IP address of the server.
+    int serverPort_; ///< The port to connect to on the server.
+
+    bool isConnected_ = false; ///< Whether the client is connected to the server.
+    int timeout_ = 30; ///< Timeout duration for asynchronous operations.
+    bool logDebug_ = false; ///< Flag to enable or disable debug logging.
 
 public:
-    Client(boost::asio::io_context& io_context, const std::string& server_ip, unsigned short server_port) : io_context_(io_context), socket_(io_context), resolver_(io_context), endpoint_iterator(resolver_.resolve(server_ip, std::to_string(server_port))), idleWork_(io_context_), serverIp_(server_ip), serverPort_(server_port), clientLogger_(debugPath){
-        // ...
+    /**
+     * @brief Constructs the Client object and initializes the connection parameters.
+     * @param io_context The IO context for asynchronous operations.
+     * @param server_ip The server's IP address.
+     * @param server_port The server's port number.
+     */
+    Client(boost::asio::io_context& io_context, const std::string& server_ip, unsigned short server_port) 
+        : io_context_(io_context), socket_(io_context), resolver_(io_context), 
+          endpoint_iterator(resolver_.resolve(server_ip, std::to_string(server_port))), 
+          idleWork_(io_context_), serverIp_(server_ip), serverPort_(server_port), clientLogger_(debugPath){
+        //...
     }
 
+    /**
+     * @brief Starts the client by launching the IO context in a separate thread.
+     * 
+     * This function initiates the IO context in a new thread, allowing asynchronous operations 
+     * to run in the background.
+     */
     void start(){
         clientLogger_.info("Starting client");
         clientThread_ = std::thread([this](){
@@ -46,6 +69,12 @@ public:
         if(logDebug_) clientLogger_.debug("Server thread has detached");
     }
 
+    /**
+     * @brief Forces the client to shut down, stopping the IO context and joining the client thread.
+     * 
+     * This method forces a shutdown of the client, also ensuring that the client thread is properly 
+     * joined and the IO context is stopped.
+     */
     void forceShutdown(){
         clientLogger_.warning("Force shutting down the client...");
         isConnected_ = false;
@@ -58,6 +87,10 @@ public:
         queue_.isWorking_ = false;
     }
 
+    /**
+     * @brief Gracefully shuts down the client, optionally running remaining tasks before shutdown.
+     * @param runRemainingTasks If true, remaining tasks are completed before shutting down.
+     */
     void shutdown(bool runRemainingTasks=false){
         std::function<void()> shutOffTask = [this](){
             clientLogger_.info("Shutting down the client...");
@@ -75,11 +108,17 @@ public:
             shutOffTask();
         }
         else{
-            if(logDebug_) clientLogger_.debug("Client shutoff task has queue_d");
-            queue_.addTask([shutOffTask](){shutOffTask();});
+            if(logDebug_) clientLogger_.debug("Client shutoff task has been queued");
+            queue_.addTask([shutOffTask](){ shutOffTask(); });
         }
     }
-     
+
+    /**
+     * @brief Connects the client to the server.
+     * 
+     * This method attempts to establish a connection to the server using the provided IP and port.
+     * It logs whether the connection was successful or failed.
+     */
     void connect(){
         clientLogger_.info("Connecting client to server | " + serverIp_ + ":" + std::to_string(serverPort_));
         
@@ -95,12 +134,20 @@ public:
         }
     }
 
+    // ~~~~~~~~ Message Functions ~~~~~~~~ //
+
+    /**
+     * @brief Asynchronously receives a message from the server.
+     * 
+     * This method initiates an asynchronous operation to receive a message from the server. It 
+     * reads the message header first, then reads the message body based on the header size.
+     */
     void asyncReceiveMessage(){
         queue_.isWorking_ = false;
         queue_.isWorkingLock_.notify_one();
 
         if(!isConnected_) {
-            clientLogger_.warning("No server connected, message not recived");
+            clientLogger_.warning("No server connected, message not received");
             return;
         }
 
@@ -114,7 +161,7 @@ public:
                         clientLogger_.error("Client timeout");
                     }
                     else{
-                        clientLogger_.error("Timout timer error " + ec.message());
+                        clientLogger_.error("Timeout timer error " + ec.message());
                     }
                 }
             });
@@ -128,7 +175,7 @@ public:
                     auto messageBuffer = std::make_shared<std::vector<char>>(messageSize);
                     if(logDebug_) clientLogger_.debug("Received header: " + std::to_string(messageSize));
                     
-                    // Read meassge
+                    // Read message body
                     boost::asio::async_read(socket_, boost::asio::buffer(*messageBuffer),
                     [this, messageBuffer, &timer](const boost::system::error_code& ec, std::size_t bytesTransferred){
                         if (!ec){
@@ -154,6 +201,14 @@ public:
         });
     }
 
+    /**
+     * @brief Asynchronously sends a message to the server.
+     * @tparam T The type of the message (array of data).
+     * @param message The message to be sent.
+     * 
+     * This method sends a message to the server asynchronously, including a 4-byte header 
+     * that indicates the size of the message.
+     */
     template <typename T, std::size_t Ndata>
     void asyncSendMessage(T (&message)[Ndata]){
         if (!isConnected_){
@@ -172,7 +227,7 @@ public:
                         clientLogger_.error("Server timeout");
                     }
                     else{
-                        clientLogger_.error("Timout timer error " + ec.message());
+                        clientLogger_.error("Timeout timer error " + ec.message());
                     }
 
                     queue_.isWorking_ = false;
@@ -183,7 +238,7 @@ public:
             // Send header
             socket_.async_send(boost::asio::buffer(&messageSize, sizeof(messageSize)), 
             [this, &timer, message](const boost::system::error_code& ec, std::size_t bytesTransferred){
-                // Send message
+                // Send message body
                 if (!ec){
                     if(logDebug_) clientLogger_.debug("Header sent: " + std::to_string(bytesTransferred) + " bytes");
                 
@@ -210,24 +265,47 @@ public:
         });
     }
 
+    // ~~~~~~~~ Message Functions ~~~~~~~~ //
+    
+    /**
+     * @brief Waits until a condition is met.
+     * @param condition The condition to be checked.
+     * @param req The expected value of the condition (default is false).
+     * 
+     * This method waits for the specified condition to be either true or false before proceeding.
+     */
     void waitUntill(bool &condition, bool req=false){
         std::unique_lock<std::mutex> lock(mtx_);
         recvLock_.wait(lock, [this, &condition, &req](){ 
-            return condition==req; 
+            return condition == req; 
         });
         lock.unlock();
     }
 
-    // Getters
+    // ~~~~~~~~ Getters ~~~~~~~~ //
+
+    /**
+     * @brief Retrieves the last received message.
+     * @return The last message from the message queue.
+     */
     std::any getLastMessage(){
         return msgQueue_.getLastMessage();
     }
 
+    /**
+     * @brief Retrieves all messages in the queue.
+     * @return A collection of all messages in the queue.
+     */
     std::any getAllMessages(){
         return msgQueue_.getAllMessages();
     }
 
-    // Setters 
+    // ~~~~~~~~ Setters ~~~~~~~~ //
+
+    /**
+     * @brief Enables or disables debug logging.
+     * @param value If true, debug logging is enabled; otherwise, it is disabled.
+     */
     void setlogDebug_(bool value){
         logDebug_ = value;
     }
