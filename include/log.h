@@ -1,3 +1,7 @@
+/**
+    * @author Ayoub Mohamed (powplowdevs on GitHub)
+*/
+
 #ifndef LOG_H
 #define LOG_H
 /**
@@ -14,7 +18,16 @@
 #include <mutex>
 #include <filesystem>
 
-// Enum representing different log levels.
+/**
+ * @enum LogLevel
+ * @brief Enumeration representing the different log levels.
+ * 
+ * This enum defines the available log levels that can be used when logging messages.
+ * - INFO: Informational messages.
+ * - WARNING: Warning messages that indicate potential issues.
+ * - ERROR: Error messages indicating failures.
+ * - DEBUG: Debug messages for development purposes.
+ */
 enum LogLevel { INFO, WARNING, ERROR, DEBUG };
 
 class Logger {

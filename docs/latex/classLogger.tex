@@ -1,0 +1,122 @@
+\hypertarget{classLogger}{}\doxysection{Logger Class Reference}
+\label{classLogger}\index{Logger@{Logger}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classLogger_a21fe729ce8927fb53e1ce9f6cb1d7e49}{Logger}} (const std\+::string \&log\+Filename)
+\begin{DoxyCompactList}\small\item\em Constructs a \mbox{\hyperlink{classLogger}{Logger}} instance. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classLogger_a3d3f0801eeaf39b33a906ea8569c19b2}{log}} (\mbox{\hyperlink{log_8h_aca1fd1d8935433e6ba2e3918214e07f9}{Log\+Level}} level, const std\+::string \&message)
+\begin{DoxyCompactList}\small\item\em Logs a message to the console and appends it to the log file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classLogger_ab4c4d86279176eb0ede726bc5b4d5ddb}{info}} (const std\+::string \&message)
+\begin{DoxyCompactList}\small\item\em Logs an informational message. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classLogger_a5164af2f632902fa3c477d5c0cb463f7}{warning}} (const std\+::string \&message)
+\begin{DoxyCompactList}\small\item\em Logs a warning message. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classLogger_ab6042fdfcbb14026098e0df9d6b32f27}{error}} (const std\+::string \&message)
+\begin{DoxyCompactList}\small\item\em Logs an error message. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classLogger_a38b544d566463a65d0dbf4ff7f867962}{debug}} (const std\+::string \&message)
+\begin{DoxyCompactList}\small\item\em Logs a debug message. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classLogger_a21fe729ce8927fb53e1ce9f6cb1d7e49}\label{classLogger_a21fe729ce8927fb53e1ce9f6cb1d7e49}} 
+\index{Logger@{Logger}!Logger@{Logger}}
+\index{Logger@{Logger}!Logger@{Logger}}
+\doxysubsubsection{\texorpdfstring{Logger()}{Logger()}}
+{\footnotesize\ttfamily Logger\+::\+Logger (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{log\+Filename }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs a \mbox{\hyperlink{classLogger}{Logger}} instance. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em log\+Filename} & Name of the log file to which logs will be written. \\
+\hline
+\end{DoxyParams}
+$<$ Ensure the log directory exists upon construction.
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classLogger_a38b544d566463a65d0dbf4ff7f867962}\label{classLogger_a38b544d566463a65d0dbf4ff7f867962}} 
+\index{Logger@{Logger}!debug@{debug}}
+\index{debug@{debug}!Logger@{Logger}}
+\doxysubsubsection{\texorpdfstring{debug()}{debug()}}
+{\footnotesize\ttfamily void Logger\+::debug (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{message }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Logs a debug message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message to log. \\
+\hline
+\end{DoxyParams}
+$<$ Call the main log function with D\+E\+B\+UG level.\mbox{\Hypertarget{classLogger_ab6042fdfcbb14026098e0df9d6b32f27}\label{classLogger_ab6042fdfcbb14026098e0df9d6b32f27}} 
+\index{Logger@{Logger}!error@{error}}
+\index{error@{error}!Logger@{Logger}}
+\doxysubsubsection{\texorpdfstring{error()}{error()}}
+{\footnotesize\ttfamily void Logger\+::error (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{message }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Logs an error message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message to log. \\
+\hline
+\end{DoxyParams}
+$<$ Call the main log function with E\+R\+R\+OR level.\mbox{\Hypertarget{classLogger_ab4c4d86279176eb0ede726bc5b4d5ddb}\label{classLogger_ab4c4d86279176eb0ede726bc5b4d5ddb}} 
+\index{Logger@{Logger}!info@{info}}
+\index{info@{info}!Logger@{Logger}}
+\doxysubsubsection{\texorpdfstring{info()}{info()}}
+{\footnotesize\ttfamily void Logger\+::info (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{message }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Logs an informational message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message to log. \\
+\hline
+\end{DoxyParams}
+$<$ Call the main log function with I\+N\+FO level.\mbox{\Hypertarget{classLogger_a3d3f0801eeaf39b33a906ea8569c19b2}\label{classLogger_a3d3f0801eeaf39b33a906ea8569c19b2}} 
+\index{Logger@{Logger}!log@{log}}
+\index{log@{log}!Logger@{Logger}}
+\doxysubsubsection{\texorpdfstring{log()}{log()}}
+{\footnotesize\ttfamily void Logger\+::log (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{log_8h_aca1fd1d8935433e6ba2e3918214e07f9}{Log\+Level}}}]{level,  }\item[{const std\+::string \&}]{message }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Logs a message to the console and appends it to the log file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em level} & The log level indicating the level of the log. \\
+\hline
+{\em message} & The log message to be recorded. \\
+\hline
+\end{DoxyParams}
+$<$ Locking the mutex to ensure thread safety.
+
+$<$ Format the timestamp.\mbox{\Hypertarget{classLogger_a5164af2f632902fa3c477d5c0cb463f7}\label{classLogger_a5164af2f632902fa3c477d5c0cb463f7}} 
+\index{Logger@{Logger}!warning@{warning}}
+\index{warning@{warning}!Logger@{Logger}}
+\doxysubsubsection{\texorpdfstring{warning()}{warning()}}
+{\footnotesize\ttfamily void Logger\+::warning (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{message }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Logs a warning message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message to log. \\
+\hline
+\end{DoxyParams}
+$<$ Call the main log function with W\+A\+R\+N\+I\+NG level.
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{log_8h}{log.\+h}}\end{DoxyCompactItemize}

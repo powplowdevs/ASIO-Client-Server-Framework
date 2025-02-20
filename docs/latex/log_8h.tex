@@ -1,0 +1,59 @@
+\hypertarget{log_8h}{}\doxysection{include/log.h File Reference}
+\label{log_8h}\index{include/log.h@{include/log.h}}
+
+
+This file defines the \mbox{\hyperlink{classLogger}{Logger}} class used for logging messages at various levels. It allows logging to both a log file and the console with timestamps and log levels (I\+N\+FO, W\+A\+R\+N\+I\+NG, E\+R\+R\+OR, D\+E\+B\+UG).  
+
+
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$ctime$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$filesystem$>$}\newline
+Include dependency graph for log.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classLogger}{Logger}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{log_8h_aca1fd1d8935433e6ba2e3918214e07f9}{Log\+Level}} \{ {\bfseries I\+N\+FO}, 
+{\bfseries W\+A\+R\+N\+I\+NG}, 
+{\bfseries E\+R\+R\+OR}, 
+{\bfseries D\+E\+B\+UG}
+ \}
+\begin{DoxyCompactList}\small\item\em Enumeration representing the different log levels. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file defines the \mbox{\hyperlink{classLogger}{Logger}} class used for logging messages at various levels. It allows logging to both a log file and the console with timestamps and log levels (I\+N\+FO, W\+A\+R\+N\+I\+NG, E\+R\+R\+OR, D\+E\+B\+UG). 
+
+\begin{DoxyAuthor}{Author}
+Ayoub Mohamed (powplowdevs on Git\+Hub) 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{log_8h_aca1fd1d8935433e6ba2e3918214e07f9}\label{log_8h_aca1fd1d8935433e6ba2e3918214e07f9}} 
+\index{log.h@{log.h}!LogLevel@{LogLevel}}
+\index{LogLevel@{LogLevel}!log.h@{log.h}}
+\doxysubsubsection{\texorpdfstring{LogLevel}{LogLevel}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{log_8h_aca1fd1d8935433e6ba2e3918214e07f9}{Log\+Level}}}
+
+
+
+Enumeration representing the different log levels. 
+
+This enum defines the available log levels that can be used when logging messages.
+\begin{DoxyItemize}
+\item I\+N\+FO\+: Informational messages.
+\item W\+A\+R\+N\+I\+NG\+: Warning messages that indicate potential issues.
+\item E\+R\+R\+OR\+: Error messages indicating failures.
+\item D\+E\+B\+UG\+: Debug messages for development purposes. 
+\end{DoxyItemize}

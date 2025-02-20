@@ -1,0 +1,226 @@
+\hypertarget{classClient}{}\doxysection{Client Class Reference}
+\label{classClient}\index{Client@{Client}}
+
+
+Represents a client that connects to a server, sends and receives messages asynchronously.  
+
+
+
+
+{\ttfamily \#include $<$client.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classClient_adb70966c4626798584aae73d92192e3b}{Client}} (boost\+::asio\+::io\+\_\+context \&io\+\_\+context, const std\+::string \&server\+\_\+ip, unsigned short server\+\_\+port)
+\begin{DoxyCompactList}\small\item\em Constructs the \mbox{\hyperlink{classClient}{Client}} object and initializes the connection parameters. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classClient_a742373e08a80d993d2651b6fff76f5b9}{start}} ()
+\begin{DoxyCompactList}\small\item\em Starts the client by launching the IO context in a separate thread. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classClient_a8793427a39afd356033a7377018ba0f9}{force\+Shutdown}} ()
+\begin{DoxyCompactList}\small\item\em Forces the client to shut down, stopping the IO context and joining the client thread. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classClient_a1b9e46673e008729d71e60bf8bcbdca1}{shutdown}} (bool run\+Remaining\+Tasks=false)
+\begin{DoxyCompactList}\small\item\em Gracefully shuts down the client, optionally running remaining tasks before shutdown. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classClient_ac8dbe9e1012e2721e65290d3967ec636}{connect}} ()
+\begin{DoxyCompactList}\small\item\em Connects the client to the server. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classClient_aceb8e2cdd7c2164e4aaa4dbc32126997}{async\+Receive\+Message}} ()
+\begin{DoxyCompactList}\small\item\em Asynchronously receives a message from the server. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T , std\+::size\+\_\+t Ndata$>$ }\\void \mbox{\hyperlink{classClient_a8356641449ade2f8e7a571964b1f1846}{async\+Send\+Message}} (T(\&message)\mbox{[}Ndata\mbox{]})
+\begin{DoxyCompactList}\small\item\em Asynchronously sends a message to the server. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classClient_ad99e97475f3843488482e87b65f3b1ad}{wait\+Untill}} (bool \&condition, bool req=false)
+\begin{DoxyCompactList}\small\item\em Waits until a condition is met. \end{DoxyCompactList}\item 
+std\+::any \mbox{\hyperlink{classClient_a7136c276e869d44b8463c3f570200162}{get\+Last\+Message}} ()
+\begin{DoxyCompactList}\small\item\em Retrieves the last received message. \end{DoxyCompactList}\item 
+std\+::any \mbox{\hyperlink{classClient_a2d7182fc7345b65504daf5e0af51282f}{get\+All\+Messages}} ()
+\begin{DoxyCompactList}\small\item\em Retrieves all messages in the queue. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classClient_ad08b6931fae32389762dc90b7d24a138}{setlog\+Debug\+\_\+}} (bool value)
+\begin{DoxyCompactList}\small\item\em Enables or disables debug logging. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a client that connects to a server, sends and receives messages asynchronously. 
+
+This class manages the connection to the server, handles sending and receiving messages asynchronously using Boost.\+Asio, and provides a task queue to handle these operations in the background. \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{main_8cpp-example}{main.\+cpp}}.\end{Desc}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classClient_adb70966c4626798584aae73d92192e3b}\label{classClient_adb70966c4626798584aae73d92192e3b}} 
+\index{Client@{Client}!Client@{Client}}
+\index{Client@{Client}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{Client()}{Client()}}
+{\footnotesize\ttfamily Client\+::\+Client (\begin{DoxyParamCaption}\item[{boost\+::asio\+::io\+\_\+context \&}]{io\+\_\+context,  }\item[{const std\+::string \&}]{server\+\_\+ip,  }\item[{unsigned short}]{server\+\_\+port }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs the \mbox{\hyperlink{classClient}{Client}} object and initializes the connection parameters. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em io\+\_\+context} & The IO context for asynchronous operations. \\
+\hline
+{\em server\+\_\+ip} & The server\textquotesingle{}s IP address. \\
+\hline
+{\em server\+\_\+port} & The server\textquotesingle{}s port number. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classClient_aceb8e2cdd7c2164e4aaa4dbc32126997}\label{classClient_aceb8e2cdd7c2164e4aaa4dbc32126997}} 
+\index{Client@{Client}!asyncReceiveMessage@{asyncReceiveMessage}}
+\index{asyncReceiveMessage@{asyncReceiveMessage}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{asyncReceiveMessage()}{asyncReceiveMessage()}}
+{\footnotesize\ttfamily void Client\+::async\+Receive\+Message (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Asynchronously receives a message from the server. 
+
+This method initiates an asynchronous operation to receive a message from the server. It reads the message header first, then reads the message body based on the header size. \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{main_8cpp-example}{main.\+cpp}}.\end{Desc}
+\mbox{\Hypertarget{classClient_a8356641449ade2f8e7a571964b1f1846}\label{classClient_a8356641449ade2f8e7a571964b1f1846}} 
+\index{Client@{Client}!asyncSendMessage@{asyncSendMessage}}
+\index{asyncSendMessage@{asyncSendMessage}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{asyncSendMessage()}{asyncSendMessage()}}
+{\footnotesize\ttfamily template$<$typename T , std\+::size\+\_\+t Ndata$>$ \\
+void Client\+::async\+Send\+Message (\begin{DoxyParamCaption}\item[{T(\&)}]{message\mbox{[}\+Ndata\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Asynchronously sends a message to the server. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of the message (array of data). \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message to be sent.\\
+\hline
+\end{DoxyParams}
+This method sends a message to the server asynchronously, including a 4-\/byte header that indicates the size of the message. \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{main_8cpp-example}{main.\+cpp}}.\end{Desc}
+\mbox{\Hypertarget{classClient_ac8dbe9e1012e2721e65290d3967ec636}\label{classClient_ac8dbe9e1012e2721e65290d3967ec636}} 
+\index{Client@{Client}!connect@{connect}}
+\index{connect@{connect}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{connect()}{connect()}}
+{\footnotesize\ttfamily void Client\+::connect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Connects the client to the server. 
+
+This method attempts to establish a connection to the server using the provided IP and port. It logs whether the connection was successful or failed. \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{main_8cpp-example}{main.\+cpp}}.\end{Desc}
+\mbox{\Hypertarget{classClient_a8793427a39afd356033a7377018ba0f9}\label{classClient_a8793427a39afd356033a7377018ba0f9}} 
+\index{Client@{Client}!forceShutdown@{forceShutdown}}
+\index{forceShutdown@{forceShutdown}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{forceShutdown()}{forceShutdown()}}
+{\footnotesize\ttfamily void Client\+::force\+Shutdown (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Forces the client to shut down, stopping the IO context and joining the client thread. 
+
+This method forces a shutdown of the client, also ensuring that the client thread is properly joined and the IO context is stopped. \mbox{\Hypertarget{classClient_a2d7182fc7345b65504daf5e0af51282f}\label{classClient_a2d7182fc7345b65504daf5e0af51282f}} 
+\index{Client@{Client}!getAllMessages@{getAllMessages}}
+\index{getAllMessages@{getAllMessages}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{getAllMessages()}{getAllMessages()}}
+{\footnotesize\ttfamily std\+::any Client\+::get\+All\+Messages (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Retrieves all messages in the queue. 
+
+\begin{DoxyReturn}{Returns}
+A collection of all messages in the queue. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classClient_a7136c276e869d44b8463c3f570200162}\label{classClient_a7136c276e869d44b8463c3f570200162}} 
+\index{Client@{Client}!getLastMessage@{getLastMessage}}
+\index{getLastMessage@{getLastMessage}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{getLastMessage()}{getLastMessage()}}
+{\footnotesize\ttfamily std\+::any Client\+::get\+Last\+Message (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Retrieves the last received message. 
+
+\begin{DoxyReturn}{Returns}
+The last message from the message queue. 
+\end{DoxyReturn}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{main_8cpp-example}{main.\+cpp}}.\end{Desc}
+\mbox{\Hypertarget{classClient_ad08b6931fae32389762dc90b7d24a138}\label{classClient_ad08b6931fae32389762dc90b7d24a138}} 
+\index{Client@{Client}!setlogDebug\_@{setlogDebug\_}}
+\index{setlogDebug\_@{setlogDebug\_}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{setlogDebug\_()}{setlogDebug\_()}}
+{\footnotesize\ttfamily void Client\+::setlog\+Debug\+\_\+ (\begin{DoxyParamCaption}\item[{bool}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Enables or disables debug logging. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & If true, debug logging is enabled; otherwise, it is disabled. \\
+\hline
+\end{DoxyParams}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{main_8cpp-example}{main.\+cpp}}.\end{Desc}
+\mbox{\Hypertarget{classClient_a1b9e46673e008729d71e60bf8bcbdca1}\label{classClient_a1b9e46673e008729d71e60bf8bcbdca1}} 
+\index{Client@{Client}!shutdown@{shutdown}}
+\index{shutdown@{shutdown}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{shutdown()}{shutdown()}}
+{\footnotesize\ttfamily void Client\+::shutdown (\begin{DoxyParamCaption}\item[{bool}]{run\+Remaining\+Tasks = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gracefully shuts down the client, optionally running remaining tasks before shutdown. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em run\+Remaining\+Tasks} & If true, remaining tasks are completed before shutting down. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classClient_a742373e08a80d993d2651b6fff76f5b9}\label{classClient_a742373e08a80d993d2651b6fff76f5b9}} 
+\index{Client@{Client}!start@{start}}
+\index{start@{start}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily void Client\+::start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Starts the client by launching the IO context in a separate thread. 
+
+This function initiates the IO context in a new thread, allowing asynchronous operations to run in the background. \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{main_8cpp-example}{main.\+cpp}}.\end{Desc}
+\mbox{\Hypertarget{classClient_ad99e97475f3843488482e87b65f3b1ad}\label{classClient_ad99e97475f3843488482e87b65f3b1ad}} 
+\index{Client@{Client}!waitUntill@{waitUntill}}
+\index{waitUntill@{waitUntill}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{waitUntill()}{waitUntill()}}
+{\footnotesize\ttfamily void Client\+::wait\+Untill (\begin{DoxyParamCaption}\item[{bool \&}]{condition,  }\item[{bool}]{req = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Waits until a condition is met. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em condition} & The condition to be checked. \\
+\hline
+{\em req} & The expected value of the condition (default is false).\\
+\hline
+\end{DoxyParams}
+This method waits for the specified condition to be either true or false before proceeding. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{client_8h}{client.\+h}}\end{DoxyCompactItemize}

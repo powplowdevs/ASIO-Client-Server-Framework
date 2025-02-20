@@ -1,0 +1,35 @@
+\hypertarget{common__includes_8h}{}\doxysection{include/common\+\_\+includes.h File Reference}
+\label{common__includes_8h}\index{include/common\_includes.h@{include/common\_includes.h}}
+
+
+This file contains the common dependencies and the definition of the \mbox{\hyperlink{structTaskQueue}{Task\+Queue}} and \mbox{\hyperlink{structMessageQueue}{Message\+Queue}} classes, which manage asynchronous task processing and message handling in separate threads, respectively.  
+
+
+{\ttfamily \#include $<$boost/asio.\+hpp$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$condition\+\_\+variable$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+{\ttfamily \#include $<$any$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include $<$queue$>$}\newline
+{\ttfamily \#include \char`\"{}log.\+h\char`\"{}}\newline
+Include dependency graph for common\+\_\+includes.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structTaskQueue}{Task\+Queue}}
+\begin{DoxyCompactList}\small\item\em Manages a queue of tasks and processes them asynchronously in a separate thread. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structMessageQueue}{Message\+Queue}}
+\begin{DoxyCompactList}\small\item\em Manages a queue of messages and processes them asynchronously. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file contains the common dependencies and the definition of the \mbox{\hyperlink{structTaskQueue}{Task\+Queue}} and \mbox{\hyperlink{structMessageQueue}{Message\+Queue}} classes, which manage asynchronous task processing and message handling in separate threads, respectively. 
+
+Includes common dependencies and manages task and message queues. 

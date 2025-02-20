@@ -1,3 +1,7 @@
+/**
+    * @author Ayoub Mohamed (powplowdevs on GitHub)
+*/
+
 #ifndef COMMON_INCLUDES_H
 #define COMMON_INCLUDES_H
 

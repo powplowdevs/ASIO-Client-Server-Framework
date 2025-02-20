@@ -1,0 +1,100 @@
+\hypertarget{structMessageQueue}{}\doxysection{Message\+Queue Struct Reference}
+\label{structMessageQueue}\index{MessageQueue@{MessageQueue}}
+
+
+Manages a queue of messages and processes them asynchronously.  
+
+
+
+
+{\ttfamily \#include $<$common\+\_\+includes.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::any \mbox{\hyperlink{structMessageQueue_a64b10a2f24d02bee5af9fb689b611ddf}{get\+Last\+Message}} ()
+\begin{DoxyCompactList}\small\item\em Retrieves the last message from the queue. \end{DoxyCompactList}\item 
+std\+::any \mbox{\hyperlink{structMessageQueue_a4136a3f41c66adff7150d7570a4624f8}{get\+All\+Messages}} ()
+\begin{DoxyCompactList}\small\item\em Retrieves and clears all messages from the queue. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{structMessageQueue_a715b7fb3f98ce49f4259dbcebd7e5845}{wait\+Until\+Filled}} ()
+\begin{DoxyCompactList}\small\item\em Waits until the queue has at least one message. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{structMessageQueue_a6d0136b900dedbbd7c19142558cfb452}{add}} (std\+::any message)
+\begin{DoxyCompactList}\small\item\em Adds a new message to the queue. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages a queue of messages and processes them asynchronously. 
+
+The \mbox{\hyperlink{structMessageQueue}{Message\+Queue}} allows messages to be added to a queue and processed in a separate thread. It uses a condition variable to synchronize access to the queue. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{structMessageQueue_a6d0136b900dedbbd7c19142558cfb452}\label{structMessageQueue_a6d0136b900dedbbd7c19142558cfb452}} 
+\index{MessageQueue@{MessageQueue}!add@{add}}
+\index{add@{add}!MessageQueue@{MessageQueue}}
+\doxysubsubsection{\texorpdfstring{add()}{add()}}
+{\footnotesize\ttfamily void Message\+Queue\+::add (\begin{DoxyParamCaption}\item[{std\+::any}]{message }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds a new message to the queue. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message to be added to the queue.\\
+\hline
+\end{DoxyParams}
+Adds the provided message to the queue and notifies the worker thread to process it. $<$ Add the message to the queue.
+
+$<$ Notify the worker thread that a message is available.\mbox{\Hypertarget{structMessageQueue_a4136a3f41c66adff7150d7570a4624f8}\label{structMessageQueue_a4136a3f41c66adff7150d7570a4624f8}} 
+\index{MessageQueue@{MessageQueue}!getAllMessages@{getAllMessages}}
+\index{getAllMessages@{getAllMessages}!MessageQueue@{MessageQueue}}
+\doxysubsubsection{\texorpdfstring{getAllMessages()}{getAllMessages()}}
+{\footnotesize\ttfamily std\+::any Message\+Queue\+::get\+All\+Messages (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Retrieves and clears all messages from the queue. 
+
+Waits for the queue to have messages, retrieves all of them, and then clears the queue.
+
+\begin{DoxyReturn}{Returns}
+A vector containing all the messages in the queue. 
+\end{DoxyReturn}
+$<$ Wait for the queue to have messages.
+
+$<$ Copy all messages.
+
+$<$ Clear the queue.\mbox{\Hypertarget{structMessageQueue_a64b10a2f24d02bee5af9fb689b611ddf}\label{structMessageQueue_a64b10a2f24d02bee5af9fb689b611ddf}} 
+\index{MessageQueue@{MessageQueue}!getLastMessage@{getLastMessage}}
+\index{getLastMessage@{getLastMessage}!MessageQueue@{MessageQueue}}
+\doxysubsubsection{\texorpdfstring{getLastMessage()}{getLastMessage()}}
+{\footnotesize\ttfamily std\+::any Message\+Queue\+::get\+Last\+Message (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Retrieves the last message from the queue. 
+
+Waits for the queue to have a message, retrieves and removes the first message from the queue.
+
+\begin{DoxyReturn}{Returns}
+The first message from the queue. 
+\end{DoxyReturn}
+$<$ Wait for the queue to have a message.
+
+$<$ Get the first message.
+
+$<$ Remove the message from the queue.\mbox{\Hypertarget{structMessageQueue_a715b7fb3f98ce49f4259dbcebd7e5845}\label{structMessageQueue_a715b7fb3f98ce49f4259dbcebd7e5845}} 
+\index{MessageQueue@{MessageQueue}!waitUntilFilled@{waitUntilFilled}}
+\index{waitUntilFilled@{waitUntilFilled}!MessageQueue@{MessageQueue}}
+\doxysubsubsection{\texorpdfstring{waitUntilFilled()}{waitUntilFilled()}}
+{\footnotesize\ttfamily void Message\+Queue\+::wait\+Until\+Filled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Waits until the queue has at least one message. 
+
+Blocks the calling thread until there is a message in the queue. $<$ Wait until the queue is not empty.
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{common__includes_8h}{common\+\_\+includes.\+h}}\end{DoxyCompactItemize}

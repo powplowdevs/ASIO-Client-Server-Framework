@@ -1,5 +1,15 @@
+/** 
+    * @author Ayoub Mohamed (powplowdevs on GitHub)
+*/
+
 #ifndef SERVER_H
 #define SERVER_H
+
+/** 
+ * @file server.h
+ * @brief Header file that defines the Server class responsible for handling server-side operations including connection, message sending/receiving, and server lifecycle management.
+ */
+
 
 #include "common_includes.h"
 

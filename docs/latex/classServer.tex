@@ -1,0 +1,327 @@
+\hypertarget{classServer}{}\doxysection{Server Class Reference}
+\label{classServer}\index{Server@{Server}}
+
+
+A class that handles the server-\/side operations including connection, message sending/receiving, and server lifecycle.  
+
+
+
+
+{\ttfamily \#include $<$server.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classServer_a4b788353616671bf0d057cb4404c4613}{Server}} (boost\+::asio\+::io\+\_\+context \&io\+\_\+context, unsigned short port)
+\begin{DoxyCompactList}\small\item\em Constructs a \mbox{\hyperlink{classServer}{Server}} instance with the given IO context and port number. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classServer_a7eac07d2582fa01c2671362efa955b31}\label{classServer_a7eac07d2582fa01c2671362efa955b31}} 
+void \mbox{\hyperlink{classServer_a7eac07d2582fa01c2671362efa955b31}{start}} ()
+\begin{DoxyCompactList}\small\item\em Starts the server by running the IO context in a separate thread. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classServer_a7223b01870da1e3adf4b9ef8675d214c}\label{classServer_a7223b01870da1e3adf4b9ef8675d214c}} 
+void \mbox{\hyperlink{classServer_a7223b01870da1e3adf4b9ef8675d214c}{force\+Shutdown}} ()
+\begin{DoxyCompactList}\small\item\em Force shuts down the server by closing connections and stopping the IO context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classServer_a255471b1a659efb90d4b63e333914992}{shutdown}} (bool run\+Remaining\+Tasks=false)
+\begin{DoxyCompactList}\small\item\em Gracefully shuts down the server, optionally running remaining tasks before shutdown. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classServer_a7347dcd4ae70ef4e41e14a26980e91e7}\label{classServer_a7347dcd4ae70ef4e41e14a26980e91e7}} 
+void \mbox{\hyperlink{classServer_a7347dcd4ae70ef4e41e14a26980e91e7}{async\+Accept\+Connection}} ()
+\begin{DoxyCompactList}\small\item\em Accepts incoming client connections asynchronously. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T , std\+::size\+\_\+t Ndata$>$ }\\void \mbox{\hyperlink{classServer_a7ed23951af5f29231a1298f1ee645a97}{async\+Send\+Message\+To\+All}} (T(\&message)\mbox{[}Ndata\mbox{]})
+\begin{DoxyCompactList}\small\item\em Sends a message to all connected clients asynchronously. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T , std\+::size\+\_\+t Ndata$>$ }\\void \mbox{\hyperlink{classServer_af79f8d4f58bdc4b2517f16aed5c856ec}{async\+Send\+Message}} (std\+::shared\+\_\+ptr$<$ tcp\+::socket $>$ \&client, T(\&message)\mbox{[}Ndata\mbox{]})
+\begin{DoxyCompactList}\small\item\em Sends a message to a specific client asynchronously. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classServer_acf9a1ed2e574603dbf6a46415a4d21ce}\label{classServer_acf9a1ed2e574603dbf6a46415a4d21ce}} 
+void \mbox{\hyperlink{classServer_acf9a1ed2e574603dbf6a46415a4d21ce}{async\+Receive\+Message}} ()
+\begin{DoxyCompactList}\small\item\em Receives messages asynchronously from connected clients. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classServer_ad0a3a2ea2a6e47cf161e1e6e638799a6}{wait\+For\+Connections}} (int x=1)
+\begin{DoxyCompactList}\small\item\em Waits until the specified number of clients are connected. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classServer_a92edbd3e868bc927b1be20562cb8f12d}{wait\+Untill}} (bool \&condition, bool req=false)
+\begin{DoxyCompactList}\small\item\em Waits until the specified condition is met. \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ tcp\+::socket $>$ $>$ \mbox{\hyperlink{classServer_afdde663d78fd3f8624b9e175aeff6982}{get\+Clients}} ()
+\begin{DoxyCompactList}\small\item\em Gets the list of connected clients. \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ tcp\+::socket $>$ \mbox{\hyperlink{classServer_a62a54d5bce884d5d46471dacd6dafaad}{get\+Client}} (int index)
+\begin{DoxyCompactList}\small\item\em Gets the client at the specified index. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classServer_aa1ab7edefce67c3444512ea4fc757859}{get\+Clients\+Amount}} ()
+\begin{DoxyCompactList}\small\item\em Gets the number of connected clients. \end{DoxyCompactList}\item 
+std\+::any \mbox{\hyperlink{classServer_a33ade0e9d0863cc957a695603914f17c}{get\+Last\+Message}} ()
+\begin{DoxyCompactList}\small\item\em Gets the last message received. \end{DoxyCompactList}\item 
+std\+::any \mbox{\hyperlink{classServer_acf886f7a2370d80a6e729938d5f5be7d}{get\+All\+Messages}} ()
+\begin{DoxyCompactList}\small\item\em Gets all received messages. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classServer_ab1ca50769ab00947fc858e8585c1290e}{setaccepting\+Connections\+\_\+}} (bool value)
+\begin{DoxyCompactList}\small\item\em Sets whether the server is accepting connections. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classServer_a5ba27f8639876d97237fbfdcd7f52252}{setaccepting\+Messages\+\_\+}} (bool value)
+\begin{DoxyCompactList}\small\item\em Sets whether the server is accepting messages. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classServer_a300963c3691b9554f4f1979c2ce311f8}{setlog\+Debug\+\_\+}} (bool value)
+\begin{DoxyCompactList}\small\item\em Sets whether debug logging is enabled. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classServer_a66b8dbdb94924e7d1c2709d47a8bcc88}{set\+Timeout}} (int value)
+\begin{DoxyCompactList}\small\item\em Sets the timeout value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class that handles the server-\/side operations including connection, message sending/receiving, and server lifecycle. \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{main_8cpp-example}{main.\+cpp}}.\end{Desc}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classServer_a4b788353616671bf0d057cb4404c4613}\label{classServer_a4b788353616671bf0d057cb4404c4613}} 
+\index{Server@{Server}!Server@{Server}}
+\index{Server@{Server}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{Server()}{Server()}}
+{\footnotesize\ttfamily Server\+::\+Server (\begin{DoxyParamCaption}\item[{boost\+::asio\+::io\+\_\+context \&}]{io\+\_\+context,  }\item[{unsigned short}]{port }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs a \mbox{\hyperlink{classServer}{Server}} instance with the given IO context and port number. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em io\+\_\+context} & The IO context to run asynchronous operations. \\
+\hline
+{\em port} & The port number the server will listen on. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classServer_af79f8d4f58bdc4b2517f16aed5c856ec}\label{classServer_af79f8d4f58bdc4b2517f16aed5c856ec}} 
+\index{Server@{Server}!asyncSendMessage@{asyncSendMessage}}
+\index{asyncSendMessage@{asyncSendMessage}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{asyncSendMessage()}{asyncSendMessage()}}
+{\footnotesize\ttfamily template$<$typename T , std\+::size\+\_\+t Ndata$>$ \\
+void Server\+::async\+Send\+Message (\begin{DoxyParamCaption}\item[{std\+::shared\+\_\+ptr$<$ tcp\+::socket $>$ \&}]{client,  }\item[{T(\&)}]{message\mbox{[}\+Ndata\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sends a message to a specific client asynchronously. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of the message. \\
+\hline
+{\em Ndata} & The size of the message. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em client} & The client to send the message to. \\
+\hline
+{\em message} & The message to send. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classServer_a7ed23951af5f29231a1298f1ee645a97}\label{classServer_a7ed23951af5f29231a1298f1ee645a97}} 
+\index{Server@{Server}!asyncSendMessageToAll@{asyncSendMessageToAll}}
+\index{asyncSendMessageToAll@{asyncSendMessageToAll}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{asyncSendMessageToAll()}{asyncSendMessageToAll()}}
+{\footnotesize\ttfamily template$<$typename T , std\+::size\+\_\+t Ndata$>$ \\
+void Server\+::async\+Send\+Message\+To\+All (\begin{DoxyParamCaption}\item[{T(\&)}]{message\mbox{[}\+Ndata\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sends a message to all connected clients asynchronously. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of the message. \\
+\hline
+{\em Ndata} & The size of the message. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message to send. \\
+\hline
+\end{DoxyParams}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{main_8cpp-example}{main.\+cpp}}.\end{Desc}
+\mbox{\Hypertarget{classServer_acf886f7a2370d80a6e729938d5f5be7d}\label{classServer_acf886f7a2370d80a6e729938d5f5be7d}} 
+\index{Server@{Server}!getAllMessages@{getAllMessages}}
+\index{getAllMessages@{getAllMessages}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{getAllMessages()}{getAllMessages()}}
+{\footnotesize\ttfamily std\+::any Server\+::get\+All\+Messages (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets all received messages. 
+
+\begin{DoxyReturn}{Returns}
+All received messages. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classServer_a62a54d5bce884d5d46471dacd6dafaad}\label{classServer_a62a54d5bce884d5d46471dacd6dafaad}} 
+\index{Server@{Server}!getClient@{getClient}}
+\index{getClient@{getClient}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{getClient()}{getClient()}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$tcp\+::socket$>$ Server\+::get\+Client (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the client at the specified index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the client. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The client at the specified index. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classServer_afdde663d78fd3f8624b9e175aeff6982}\label{classServer_afdde663d78fd3f8624b9e175aeff6982}} 
+\index{Server@{Server}!getClients@{getClients}}
+\index{getClients@{getClients}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{getClients()}{getClients()}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::shared\+\_\+ptr$<$tcp\+::socket$>$ $>$ Server\+::get\+Clients (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the list of connected clients. 
+
+\begin{DoxyReturn}{Returns}
+The list of connected clients. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classServer_aa1ab7edefce67c3444512ea4fc757859}\label{classServer_aa1ab7edefce67c3444512ea4fc757859}} 
+\index{Server@{Server}!getClientsAmount@{getClientsAmount}}
+\index{getClientsAmount@{getClientsAmount}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{getClientsAmount()}{getClientsAmount()}}
+{\footnotesize\ttfamily int Server\+::get\+Clients\+Amount (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the number of connected clients. 
+
+\begin{DoxyReturn}{Returns}
+The number of connected clients. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classServer_a33ade0e9d0863cc957a695603914f17c}\label{classServer_a33ade0e9d0863cc957a695603914f17c}} 
+\index{Server@{Server}!getLastMessage@{getLastMessage}}
+\index{getLastMessage@{getLastMessage}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{getLastMessage()}{getLastMessage()}}
+{\footnotesize\ttfamily std\+::any Server\+::get\+Last\+Message (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the last message received. 
+
+\begin{DoxyReturn}{Returns}
+The last received message. 
+\end{DoxyReturn}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{main_8cpp-example}{main.\+cpp}}.\end{Desc}
+\mbox{\Hypertarget{classServer_ab1ca50769ab00947fc858e8585c1290e}\label{classServer_ab1ca50769ab00947fc858e8585c1290e}} 
+\index{Server@{Server}!setacceptingConnections\_@{setacceptingConnections\_}}
+\index{setacceptingConnections\_@{setacceptingConnections\_}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{setacceptingConnections\_()}{setacceptingConnections\_()}}
+{\footnotesize\ttfamily void Server\+::setaccepting\+Connections\+\_\+ (\begin{DoxyParamCaption}\item[{bool}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets whether the server is accepting connections. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Whether to accept connections. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classServer_a5ba27f8639876d97237fbfdcd7f52252}\label{classServer_a5ba27f8639876d97237fbfdcd7f52252}} 
+\index{Server@{Server}!setacceptingMessages\_@{setacceptingMessages\_}}
+\index{setacceptingMessages\_@{setacceptingMessages\_}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{setacceptingMessages\_()}{setacceptingMessages\_()}}
+{\footnotesize\ttfamily void Server\+::setaccepting\+Messages\+\_\+ (\begin{DoxyParamCaption}\item[{bool}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets whether the server is accepting messages. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Whether to accept messages. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classServer_a300963c3691b9554f4f1979c2ce311f8}\label{classServer_a300963c3691b9554f4f1979c2ce311f8}} 
+\index{Server@{Server}!setlogDebug\_@{setlogDebug\_}}
+\index{setlogDebug\_@{setlogDebug\_}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{setlogDebug\_()}{setlogDebug\_()}}
+{\footnotesize\ttfamily void Server\+::setlog\+Debug\+\_\+ (\begin{DoxyParamCaption}\item[{bool}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets whether debug logging is enabled. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Whether to enable debug logging. \\
+\hline
+\end{DoxyParams}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{main_8cpp-example}{main.\+cpp}}.\end{Desc}
+\mbox{\Hypertarget{classServer_a66b8dbdb94924e7d1c2709d47a8bcc88}\label{classServer_a66b8dbdb94924e7d1c2709d47a8bcc88}} 
+\index{Server@{Server}!setTimeout@{setTimeout}}
+\index{setTimeout@{setTimeout}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{setTimeout()}{setTimeout()}}
+{\footnotesize\ttfamily void Server\+::set\+Timeout (\begin{DoxyParamCaption}\item[{int}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the timeout value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & The timeout value in seconds. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classServer_a255471b1a659efb90d4b63e333914992}\label{classServer_a255471b1a659efb90d4b63e333914992}} 
+\index{Server@{Server}!shutdown@{shutdown}}
+\index{shutdown@{shutdown}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{shutdown()}{shutdown()}}
+{\footnotesize\ttfamily void Server\+::shutdown (\begin{DoxyParamCaption}\item[{bool}]{run\+Remaining\+Tasks = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gracefully shuts down the server, optionally running remaining tasks before shutdown. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em run\+Remaining\+Tasks} & If true, will run remaining tasks before shutting down. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classServer_ad0a3a2ea2a6e47cf161e1e6e638799a6}\label{classServer_ad0a3a2ea2a6e47cf161e1e6e638799a6}} 
+\index{Server@{Server}!waitForConnections@{waitForConnections}}
+\index{waitForConnections@{waitForConnections}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{waitForConnections()}{waitForConnections()}}
+{\footnotesize\ttfamily void Server\+::wait\+For\+Connections (\begin{DoxyParamCaption}\item[{int}]{x = {\ttfamily 1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Waits until the specified number of clients are connected. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The number of clients to wait for. \\
+\hline
+\end{DoxyParams}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{main_8cpp-example}{main.\+cpp}}.\end{Desc}
+\mbox{\Hypertarget{classServer_a92edbd3e868bc927b1be20562cb8f12d}\label{classServer_a92edbd3e868bc927b1be20562cb8f12d}} 
+\index{Server@{Server}!waitUntill@{waitUntill}}
+\index{waitUntill@{waitUntill}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{waitUntill()}{waitUntill()}}
+{\footnotesize\ttfamily void Server\+::wait\+Untill (\begin{DoxyParamCaption}\item[{bool \&}]{condition,  }\item[{bool}]{req = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Waits until the specified condition is met. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em condition} & The condition to wait for. \\
+\hline
+{\em req} & The required condition value (default is false). \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{server_8h}{server.\+h}}\end{DoxyCompactItemize}

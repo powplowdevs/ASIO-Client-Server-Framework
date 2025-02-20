@@ -1,0 +1,11 @@
+digraph "include/common_includes.h"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="include/common_includes.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="This file contains the common dependencies and the definition of the TaskQueue and MessageQueue class..."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="include/client.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$client_8h.html",tooltip="Header file that defines the Client class responsible for managing client-side operations including c..."];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="include/server.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$server_8h.html",tooltip="Header file that defines the Server class responsible for handling server-side operations including c..."];
+}

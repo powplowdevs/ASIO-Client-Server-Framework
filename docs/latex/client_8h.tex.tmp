@@ -1,0 +1,23 @@
+\hypertarget{client_8h}{}\doxysection{include/client.h File Reference}
+\label{client_8h}\index{include/client.h@{include/client.h}}
+
+
+Header file that defines the \mbox{\hyperlink{classClient}{Client}} class responsible for managing client-\/side operations including connection, message sending/receiving, and client lifecycle management.  
+
+
+{\ttfamily \#include \char`\"{}common\+\_\+includes.\+h\char`\"{}}\newline
+Include dependency graph for client.\+h\+:
+% FIG 0
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classClient}{Client}}
+\begin{DoxyCompactList}\small\item\em Represents a client that connects to a server, sends and receives messages asynchronously. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Header file that defines the \mbox{\hyperlink{classClient}{Client}} class responsible for managing client-\/side operations including connection, message sending/receiving, and client lifecycle management. 
+
+\begin{DoxyAuthor}{Author}
+Ayoub Mohamed (powplowdevs on Git\+Hub) 
+\end{DoxyAuthor}

@@ -1,5 +1,14 @@
+/**
+    * @author Ayoub Mohamed (powplowdevs on GitHub)
+*/
+
 #ifndef CLIENT_H
 #define CLIENT_H
+
+/**
+ * @file client.h
+ * @brief Header file that defines the Client class responsible for managing client-side operations including connection, message sending/receiving, and client lifecycle management.
+*/
 
 #include "common_includes.h"
 

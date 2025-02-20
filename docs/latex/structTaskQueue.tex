@@ -1,0 +1,98 @@
+\hypertarget{structTaskQueue}{}\doxysection{Task\+Queue Struct Reference}
+\label{structTaskQueue}\index{TaskQueue@{TaskQueue}}
+
+
+Manages a queue of tasks and processes them asynchronously in a separate thread.  
+
+
+
+
+{\ttfamily \#include $<$common\+\_\+includes.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structTaskQueue_a96f599af93aef537d89f390e2de34cc8}{Task\+Queue}} ()
+\begin{DoxyCompactList}\small\item\em Constructs the \mbox{\hyperlink{structTaskQueue}{Task\+Queue}} and starts the task processing thread. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structTaskQueue_a80e3df38cc5af6574d5b3fa44726caca}{$\sim$\+Task\+Queue}} ()
+\begin{DoxyCompactList}\small\item\em Destructor stops the task queue and joins the processing thread. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{structTaskQueue_a5760c101071015039f297db48a309995}{add\+Task}} (std\+::function$<$ void()$>$ lambda)
+\begin{DoxyCompactList}\small\item\em Adds a new task to the queue to be processed asynchronously. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{structTaskQueue_aec2a67f4a3f206fcad4b22717af1b2be}{stop\+Queue}} ()
+\begin{DoxyCompactList}\small\item\em Stops the task queue and signals the processing thread to terminate. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structTaskQueue_a340c5b8b4290a45baf4169f86d44b6e2}\label{structTaskQueue_a340c5b8b4290a45baf4169f86d44b6e2}} 
+bool \mbox{\hyperlink{structTaskQueue_a340c5b8b4290a45baf4169f86d44b6e2}{is\+Working\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Indicates whether the queue is currently processing a task. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structTaskQueue_a39ae06c4ead297bb6cf768185cd5994a}\label{structTaskQueue_a39ae06c4ead297bb6cf768185cd5994a}} 
+std\+::condition\+\_\+variable \mbox{\hyperlink{structTaskQueue_a39ae06c4ead297bb6cf768185cd5994a}{is\+Working\+Lock\+\_\+}}
+\begin{DoxyCompactList}\small\item\em A condition variable to wait for a task\textquotesingle{}s completion. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages a queue of tasks and processes them asynchronously in a separate thread. 
+
+The \mbox{\hyperlink{structTaskQueue}{Task\+Queue}} allows tasks to be added to a queue, which are then processed in a separate thread. It uses condition variables to manage synchronization between threads. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{structTaskQueue_a96f599af93aef537d89f390e2de34cc8}\label{structTaskQueue_a96f599af93aef537d89f390e2de34cc8}} 
+\index{TaskQueue@{TaskQueue}!TaskQueue@{TaskQueue}}
+\index{TaskQueue@{TaskQueue}!TaskQueue@{TaskQueue}}
+\doxysubsubsection{\texorpdfstring{TaskQueue()}{TaskQueue()}}
+{\footnotesize\ttfamily Task\+Queue\+::\+Task\+Queue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs the \mbox{\hyperlink{structTaskQueue}{Task\+Queue}} and starts the task processing thread. 
+
+Initializes the task queue and starts a separate thread to process tasks asynchronously. $<$ Start processing tasks in a separate thread.\mbox{\Hypertarget{structTaskQueue_a80e3df38cc5af6574d5b3fa44726caca}\label{structTaskQueue_a80e3df38cc5af6574d5b3fa44726caca}} 
+\index{TaskQueue@{TaskQueue}!````~TaskQueue@{$\sim$TaskQueue}}
+\index{````~TaskQueue@{$\sim$TaskQueue}!TaskQueue@{TaskQueue}}
+\doxysubsubsection{\texorpdfstring{$\sim$TaskQueue()}{~TaskQueue()}}
+{\footnotesize\ttfamily Task\+Queue\+::$\sim$\+Task\+Queue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Destructor stops the task queue and joins the processing thread. 
+
+Signals the task processing thread to stop and waits for it to finish. $<$ Set stop flag to true to signal the thread to stop processing.
+
+$<$ Notify the thread to check for the stop flag.
+
+$<$ Wait for the task processing thread to finish.
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{structTaskQueue_a5760c101071015039f297db48a309995}\label{structTaskQueue_a5760c101071015039f297db48a309995}} 
+\index{TaskQueue@{TaskQueue}!addTask@{addTask}}
+\index{addTask@{addTask}!TaskQueue@{TaskQueue}}
+\doxysubsubsection{\texorpdfstring{addTask()}{addTask()}}
+{\footnotesize\ttfamily void Task\+Queue\+::add\+Task (\begin{DoxyParamCaption}\item[{std\+::function$<$ void()$>$}]{lambda }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds a new task to the queue to be processed asynchronously. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lambda} & A function (task) to be added to the task queue.\\
+\hline
+\end{DoxyParams}
+Adds the provided task (lambda) to the queue and notifies the worker thread to process it. $<$ Add the task (lambda) to the queue.
+
+$<$ Notify the worker thread that a task is available.\mbox{\Hypertarget{structTaskQueue_aec2a67f4a3f206fcad4b22717af1b2be}\label{structTaskQueue_aec2a67f4a3f206fcad4b22717af1b2be}} 
+\index{TaskQueue@{TaskQueue}!stopQueue@{stopQueue}}
+\index{stopQueue@{stopQueue}!TaskQueue@{TaskQueue}}
+\doxysubsubsection{\texorpdfstring{stopQueue()}{stopQueue()}}
+{\footnotesize\ttfamily void Task\+Queue\+::stop\+Queue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Stops the task queue and signals the processing thread to terminate. 
+
+Sets the stop flag to true and signals the processing thread to exit its loop. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{common__includes_8h}{common\+\_\+includes.\+h}}\end{DoxyCompactItemize}

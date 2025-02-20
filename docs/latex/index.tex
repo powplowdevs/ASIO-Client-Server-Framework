@@ -1,0 +1,29 @@
+This framework is a baseline setup for asynchronous communication between a server and multiple clients using Boost A\+S\+IO. It provides the essential tools to\+:
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Establish Connections\+:}} Create and manage a server that listens for connections, and clients that connect to it.
+\item {\bfseries{Send and Receive Messages\+:}} Asynchronously send and receive messages between the server and clients.
+\item {\bfseries{Log Activity\+:}} Record events and errors for troubleshooting.
+\item {\bfseries{Manage Asynchronous Tasks\+:}} Use task and message queues to handle operations in the background.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md2}{}\doxysection{Project Status \& Documentation}\label{index_autotoc_md2}
+
+\begin{DoxyItemize}
+\item ⚙️ Status\+: Completed (with potential future updates)
+\item 📚 {\bfseries{Documentation\+:}} Detailed documentation is available at {\ttfamily /docs/html/index.html}
+\item 📁 {\bfseries{Examples\+:}} Example usage can be found in {\ttfamily /src/examples}
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md4}{}\doxysection{Getting Started}\label{index_autotoc_md4}
+Before you begin, ensure you have the following installed on your machine\+:
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Boost C++ Libraries}}\+: The framework uses Boost A\+S\+IO, so make sure you have the Boost libraries set up. \href{https://www.boost.org/doc/libs/1_87_0/more/getting_started/index.html}{\texttt{ Boost Installation Guide}}
+\item {\bfseries{C++ Compiler}}\+: Make sure you have a working C++ compiler installed (e.\+g., G\+CC, Clang, M\+S\+VC).
+\end{DoxyItemize}\hypertarget{index_autotoc_md5}{}\doxysubsection{Including Header Files}\label{index_autotoc_md5}
+To use the framework, simply include all the header files in the {\ttfamily /include} directory. Since this is a header-\/file-\/only project, there is no need to compile any source files. All necessary functionality is contained in the headers. You may copy the headers into your own {\ttfamily includes} folder, configure your compiler to include the headers, or link them in your compile command. 
