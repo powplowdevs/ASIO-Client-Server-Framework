@@ -1,130 +1,93 @@
-/**
- * @file main.cpp
- * @brief Example usage of the Boost ASIO Client-Server Framework.
- * 
- * This example demonstrates how to use the Boost ASIO Client-Server Framework for creating a simple 
- * client-server application. It allows the user to choose to either run as a server or client. 
- * The server listens for client connections and exchanges messages with the client asynchronously.
- * 
- * 
- * @author Ayoub Mohamed (powplowdevs on GitHub)
- * @license MIT License. See LICENSE file for details.
- * 
- * @example main.cpp
- * This example demonstrates how to use the Boost ASIO Client-Server Framework for creating a simple client-server application.
- * The code below shows how the server and client are implemented:
- * 
- * Below is the main function to run the client-server example.
- * 
- * The user is prompted to choose whether they want to run as a server or a client.
- * - If the user selects "s" for server, it sets up a server to listen for connections,
- *   send a message to clients, and receive a response asynchronously.
- * - If the user selects "c" for client, it connects to the server, sends a message, 
- *   and waits for a response.
- * 
- * @note To compile the example, use g++ (or similar C++ compiler) with the following command:
- *       g++ main.cpp -o main.exe -I../../include -pthread -std=c++17
- *       After compiling, you can run the program using:
- *       ./main.exe
- * 
- * @code
- */
+// src/examples/main.cpp  --  a basic run-through of the framework
+//
+// Starts a server that echoes messages back, connects a client to it, sends a few messages,
+// prints the replies, then shuts both down. It also shows how to set timeouts, heartbeats and logging.
+//
+// build (from the src/examples folder): g++-13 -std=c++23 -pthread -I../../include main.cpp -o example
+// run:                                  ./example
 
- #include <boost/asio.hpp>   // Include Boost ASIO for asynchronous networking
- #include <iostream>
- #include <string>
- #include <thread>
- #include <atomic>
- #include <chrono>
- 
- #include "server.h"          // Include custom header for server functionality
- #include "client.h"          // Include custom header for client functionality
- 
- using boost::asio::ip::tcp;   // Use TCP protocol for client-server communication
- using std::cout;              // Use standard output
- using std::cin;               // Use standard input
- using std::cerr;              // Use standard error output
- 
- int main() {
-     std::string userChoice;  // Variable to store user input (server or client)
-     cout << "Are you a server or a client (s/c): ";
-     cin >> userChoice;  // Get user input to decide if running as server or client
- 
-     if(userChoice == "s"){
-         // Server side code
-         // @example server
-         // Create an io_context, necessary for Boost ASIO asynchronous operations
-         boost::asio::io_context io_context;
- 
-         // Create a server object, set port to 15555
-         unsigned short port = 15555;
-         Server server(io_context, port);
- 
-         // Start server & io_context (io_context handles asynchronous tasks)
-         server.start();
- 
-         // Start accepting incoming client connections asynchronously
-         server.asyncAcceptConnection();
- 
-         // Enable message logging for debugging
-         server.setlogDebug_(true);
- 
-         // Wait for client connections (only 1 client in this example)
-         server.waitForConnections(1);
- 
-         // Send a message to all connected clients (in this case, just one)
-         server.asyncSendMessageToAll("Hello from the server!");
- 
-         // Receive a message asynchronously from the client
-         server.asyncReceiveMessage();
- 
-         // Get the last received message from the server and display it
-         std::string msg = std::any_cast<std::string>(server.getLastMessage());
-         cout << "MSG FROM SERVER: " << msg << std::endl;
- 
-         // Run the io_context to process the asynchronous operations
-         io_context.run();
-     }
-     else{
-         // Client side code
-         // @example client
-         // Create an io_context, necessary for Boost ASIO asynchronous operations
-         boost::asio::io_context io_context;
- 
-         // Set server IP and port
-         unsigned short port = 15555;
-         std::string serverIp = "127.0.0.1";  // Localhost for testing
- 
-         // Create a client object
-         Client client(io_context, serverIp, port);
- 
-         // Start the client & io_context (io_context handles asynchronous tasks)
-         client.start();
- 
-         // Enable message logging for debugging
-         client.setlogDebug_(true);
- 
-         // Establish connection to the server
-         client.connect();
- 
-         // Send a message to the server asynchronously
-         client.asyncSendMessage("Hello from the client!");
- 
-         // Receive a message asynchronously from the server
-         client.asyncReceiveMessage();
- 
-         // Get the last received message from the client and display it
-         std::string msg = std::any_cast<std::string>(client.getLastMessage());
-         cout << "MSG FROM SERVER: " << msg << std::endl;
- 
-         // Run the io_context to process the asynchronous operations
-         io_context.run();
-     }
- 
-     return 0;
- }
- 
- /**
-  * @endcode
-  */
- 
+#include <chrono>
+#include <iostream>
+#include <thread>
+
+#include "server.h"
+#include "client.h"
+
+int main() {
+    const std::uint16_t port = 15555;
+
+    // ---- 1. Timeouts ----
+    // All timeouts are in milliseconds, and 0 turns that timeout off. They are shared by every server and client in the program.
+    acsf::setTimeout(acsf::READ_TIMEOUT_MS, std::chrono::milliseconds(5000));             // max wait for the next message to start arriving
+    acsf::setTimeout(acsf::READ_BODY_TIMEOUT_MS, std::chrono::milliseconds(5000));        // max wait for the rest of a message once it started
+    acsf::setTimeout(acsf::SEND_TIMEOUT_MS, std::chrono::milliseconds(5000));             // max time to finish sending one message
+    acsf::setTimeout(acsf::SERVER_HEARTBEAT_TIMEOUT_MS, std::chrono::milliseconds(5000)); // drop a connection that has been silent this long
+    acsf::setTimeout(acsf::HEARTBEAT_RATE, std::chrono::milliseconds(2000));              // how often to send a heartbeat
+
+    // ---- 2. Start the server ----
+    // Logging is off by defualt.
+    acsf::LoggerConfig serverLog;
+    serverLog.enabled = true;
+    serverLog.folder = "LOG_FOLDER/server";
+
+    // Arguments: port, callback for when a client disconnects, "drop silent clients", "send heartbeats", logging config
+    acsf::Server server(port,
+                        [] { std::cout << "[server] a client disconnected\n"; },
+                        /*keepAliveByHeartBeat=*/true, //Default value is true
+                        /*sendHeartBeats=*/false, //Default value is false
+                        serverLog);
+    server.start();
+
+    // receive() blocks until a message arrives (or returns nothing once the server stops), so give it its own thread.
+    // Here we just send every message straight back to whoever sent it.
+    std::thread serverThread([&server] {
+        while (auto msg = server.receive()) {
+            std::cout << "[server] got from client " << msg->isFrom << ": " << msg->payload << "\n";
+            server.send(msg->isFrom, "echo: " + msg->payload);
+        }
+    });
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(200)); // give the server a moment to start listening
+
+    // ---- 3. Connect a client ----
+    acsf::LoggerConfig clientLog;
+    clientLog.enabled = true;
+    clientLog.folder = "LOG_FOLDER/client";
+
+    // Arguments: ip, port, callback for when the connection closes, "drop a silent server", "send heartbeats", logging config
+    acsf::Client client("127.0.0.1", port,
+                        [] { std::cout << "[client] connection closed\n"; },
+                        /*keepAliveByHeartBeat=*/false,  //Default value is false
+                        /*sendHeartBeats=*/true,  //Default value is true
+                        clientLog);
+
+    if (auto ec = client.start()) {            // start() returns an error code if it could not connect
+        std::cerr << "[client] could not connect: " << ec.message() << "\n";
+        server.stop();
+        serverThread.join();
+        return 1;
+    }
+
+    // ---- 4. Send and receive ----
+    for (int i = 0; i < 3; ++i) {
+        client.send("hello " + std::to_string(i));        // send() returns right away; the message is sent in the background
+    }
+
+    for (int i = 0; i < 3; ++i) {
+        auto reply = client.receive();                    // waits until a message arrives
+        if (!reply) break;                                // nothing returned means the connection closed
+        std::cout << "[client] got: " << reply->payload << "\n";
+    }
+
+    // Stay connected a little: with heartbeats on, an idle connection is kept alive instead of being dropped
+    std::this_thread::sleep_for(std::chrono::seconds(3));
+
+    // ---- 5. Shut down ----
+    client.stop();
+    std::this_thread::sleep_for(std::chrono::milliseconds(200)); // let the server notice the client leaving
+    server.stop();
+    serverThread.join();
+
+    std::cout << "done (see LOG_FOLDER for the log files)\n";
+    return 0;
+}
