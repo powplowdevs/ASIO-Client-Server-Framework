@@ -28,6 +28,9 @@ client.send("hello");
 auto reply = client.receive();                   // blocks until a message arrives
 ```
 
+## Documentation
+Doxygen docs can be found [here](https://powplowdevs.github.io/docs/html/index.html)
+
 ## Project layout
 
 ```
